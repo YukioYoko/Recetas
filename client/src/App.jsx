@@ -12,6 +12,7 @@ function App(){
       <Route path="/" element={<Navigate to="recipes"/>} />
         <Route path="/recipes" element={<RecipePage/>} />
         <Route path="/recipes-create" element={<RecipeFormPage/>} />
+        <Route path="/recipes/:id" element={<RecipeFormPage/>} />
       </Routes>
     </BrowserRouter>
   )

@@ -1,5 +1,5 @@
+import { RecipeList } from "../components/RecipeList"
+
 export function RecipePage() {
-  return (
-    <div>RecipePage</div>
-  )
+  return <RecipeList/>;
 }
