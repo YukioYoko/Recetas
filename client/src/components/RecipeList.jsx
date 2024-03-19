@@ -14,7 +14,7 @@ export function RecipeList() {
         loadRecipes();
     }, [])
 
-    return <div>
+    return <div className="grid grid-cols-3 gap-3">
         {recipes.map(recipe => (
             <RecipeCard key={recipe.id} recipe={recipe}/>
         ))}
