@@ -12,5 +12,3 @@ export function Navigation() {
     </div>
   )
 }
-
-

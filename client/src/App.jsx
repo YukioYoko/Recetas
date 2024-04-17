@@ -1,7 +1,7 @@
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import { RecipePage } from './pages/RecipePage'
 import { RecipeFormPage } from './pages/RecipeFormPage'
-import {Navigation} from "./components/Navigation"
+import { Navigation } from './components/Navigation'
 import { Toaster } from "react-hot-toast"
 
 function App(){
