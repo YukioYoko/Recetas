@@ -2,12 +2,12 @@ import {Link} from 'react-router-dom'
 
 export function Navigation() {
   return (
-    <div className='flex justify-between py-3'>
-        <Link to="/recipes">
-            <h1 className='text-white font-bold text-3xl mb-4'>Tastopia v0.1</h1>
+    <div className='flex justify-between items-center py-3 bg-custom-naranja-oscuro px-3 w-screen'>
+        <Link to="/">
+          <img src='../images/logo.png'/>
         </Link>
 
-        <Link className='font-bold text-custom-naranja-logo bg-custom-gris px-3 py-3 rounded-lg' to="/recipes-create">Create Recipe</Link>
+        <Link className='font-title uppercase text-custom-beige bg-custom-naranja-oscuro px-3 py-3 rounded-lg' to="/login">Entrar</Link>
 
     </div>
   )
