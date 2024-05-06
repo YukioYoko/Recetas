@@ -15,7 +15,7 @@ export default {
       },
       fontFamily: {
         title: ['Righteous'],
-        body: ['Josefin+Sans']
+        body: ['Josefin Sans']
       }
     },
   },
