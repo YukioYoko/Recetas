@@ -8,12 +8,15 @@ export default {
     extend: {
       colors: {
         custom: {
-          'gris': '#F4F4F4',
-          'gris-oscuro': "#D9D9D9",
-          'naranja-logo': '#FFA32B',
-          'azul-cyan': '#25CED1',
+          'naranja-logo': '#ED9D20',
+          'naranja-oscuro': '#C9593C',
+          'beige': '#FEFBE7',
         },
       },
+      fontFamily: {
+        title: ['Righteous'],
+        body: ['Josefin+Sans']
+      }
     },
   },
   plugins: [],

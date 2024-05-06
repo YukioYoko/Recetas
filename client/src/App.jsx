@@ -3,6 +3,7 @@ import { RecipePage } from './pages/RecipePage'
 import { RecipeFormPage } from './pages/RecipeFormPage'
 import { Navigation } from './components/Navigation'
 import { Toaster } from "react-hot-toast"
+import { CardsColecciones } from './components/CardsColecciones'
 
 function App(){
   return (
@@ -17,6 +18,8 @@ function App(){
         <Route path="/recipes/:id" element={<RecipeFormPage/>} />
       </Routes>
       <Toaster/>
+      <CardsColecciones/>
+    
     </div>
     </BrowserRouter>
   )
