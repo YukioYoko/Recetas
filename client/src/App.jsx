@@ -4,12 +4,14 @@ import { RecipeFormPage } from './pages/RecipeFormPage'
 import { Navigation } from './components/Navigation'
 import { Toaster } from "react-hot-toast"
 import { HomePage } from './pages/HomePage'
+import { NavigationLogged } from './components/NavigationLogged'
 
 function App(){
   return (
     <BrowserRouter>
     <div className=' bg-custom-naranja-logo min-h-screen min-w-screen'>
-      <Navigation/>
+      
+      <NavigationLogged/>
 
       <Routes>
       <Route path="/" element={<HomePage/>} />
