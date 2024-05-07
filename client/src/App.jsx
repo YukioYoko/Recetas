@@ -5,6 +5,7 @@ import { Navigation } from './components/Navigation'
 import { Toaster } from "react-hot-toast"
 import { HomePage } from './pages/HomePage'
 import { Colecciones } from './pages/Colecciones'
+import { ColeccionInterna } from './pages/ColeccionInterna'
 
 function App(){
   return (
@@ -17,11 +18,10 @@ function App(){
         <Route path="/recipes-create" element={<RecipeFormPage/>} />
         <Route path="/recipes/:id" element={<RecipeFormPage/>} />
         <Route path="/colecciones" element={<Colecciones/>} />
+        <Route path="/coleccioninterna" element={<ColeccionInterna/>} />
       </Routes>
       <Toaster/>
-      
-
-      
+    
     </div>
     </BrowserRouter>
   )
