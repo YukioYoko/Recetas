@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { createRecipe,deleteRecipe, updateRecipe, getRecipe } from '../api/recipes.api';
 import {useNavigate, useParams} from 'react-router-dom'
 import toast from 'react-hot-toast';
+import { NavigationLogged } from '../components/NavigationLogged'
 
 export function RecipeFormPage() {
   const { 
@@ -43,6 +44,7 @@ export function RecipeFormPage() {
 
   return (
     <div className='maxv-w-xl mx-auto'>
+      <NavigationLogged/>
       <form onSubmit={onSubmit}>
         <input
           type="text"
