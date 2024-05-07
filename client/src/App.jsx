@@ -16,9 +16,9 @@ function App(){
       <NavigationLogged/>
       <Routes>
       <Route path="/" element={<HomePage/>} />
-        <Route path="/recipes" element={<RecipePage/>} />
-        <Route path="/recipes-create" element={<CreateRecipePage/>} />
-        <Route path="/recipes/:id" element={<CreateRecipePage/>} />
+        <Route path="/recipe" element={<RecipePage/>} />
+        <Route path="/recipe-create" element={<CreateRecipePage/>} />
+        <Route path="/recipe/:id" element={<CreateRecipePage/>} />
         <Route path="/colecciones" element={<Colecciones/>} />
         <Route path="/coleccioninterna" element={<ColeccionInterna/>} />
       </Routes>
