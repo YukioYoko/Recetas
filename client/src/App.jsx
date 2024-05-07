@@ -6,6 +6,8 @@ import { HomePage } from './pages/HomePage'
 import { Colecciones } from './pages/Colecciones'
 import { NavigationLogged } from './components/NavigationLogged'
 import { ColeccionesInternas } from './pages/ColeccionesInternas'
+import { RegisterPage } from './pages/RegisterPage'
+import { LoginPage } from './pages/LoginPage'
 
 function App(){
   return (
