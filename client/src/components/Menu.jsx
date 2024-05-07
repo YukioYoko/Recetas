@@ -27,7 +27,7 @@ export function Menu(){
                     </button>
                     <div className={'w-[350px] mr-[50px] mt-5 text-custom-naranja-oscuro font-title text-[32px]'}>
 
-                        <Link to="/recipes-create" onClick={() => setOpen(false)}>
+                        <Link to="/recipe-create" onClick={() => setOpen(false)}>
                             <div className='flex items-center px-2  border-b-2 border-custom-naranja-oscuro py-2 hover:pl-[10px] transition-all duration-150'>
                                 <img src={agregar} alt="Agregar" className='w-8 h-8 mr-5'/>
                                 Agregar Receta
