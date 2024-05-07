@@ -1,11 +1,12 @@
 import {Link} from 'react-router-dom'
 import logo from '../images/logo.png'
 import buscar from '../images/buscar.png'
+import { Menu } from './Menu'
 
 
-export function Navigation() {
+export function NavigationLogged() {
   return (
-    <div className='flex justify-between items-center py-3 bg-custom-naranja-oscuro px-10 fixed top-0 left-0 right-0'>
+    <div className='flex justify-between items-center py-3 bg-custom-naranja-oscuro px-10'>
         <Link to="/">
           <img src={logo} className='w-28'/>
         </Link>
@@ -14,10 +15,7 @@ export function Navigation() {
           <img src={buscar} alt="" className='w-7 '/>
         </div>
 
-        <div className='space-x-8'>
-          <Link className='font-title text-xl uppercase text-black bg-custom-beige px-8 py-4 rounded-lg' to="/login">Registrar</Link>
-          <Link className='font-title text-xl uppercase text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg' to="/acceso-login">Entrar</Link>
-        </div>
+        <Menu/>
         
     </div>
   )
