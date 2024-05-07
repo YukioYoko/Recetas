@@ -31,7 +31,7 @@ export function LoginPage() {
             </div>
             <div class="pl-8"></div>
             <div>
-              <a href="#">¿No tienes una cuenta?</a>
+              <a href="../register">¿No tienes una cuenta?</a>
             </div>
           </div>
         </form>

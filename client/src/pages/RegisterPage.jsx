@@ -50,7 +50,7 @@ export function RegisterPage() {
             </div>
             <div class="pl-8"></div>
             <div>
-              <a href="#">Ya tengo una cuenta</a>
+              <a href="../login">Ya tengo una cuenta</a>
             </div>
           </div>
         </form>
