@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast"
 import { HomePage } from './pages/HomePage'
 import { Colecciones } from './pages/Colecciones'
 import { NavigationLogged } from './components/NavigationLogged'
+import { ColeccionesInternas } from './pages/ColeccionesInternas'
 
 function App(){
   return (
@@ -19,6 +20,7 @@ function App(){
         <Route path="/recipe-create" element={<CreateRecipePage/>} />
         <Route path="/recipe/:id" element={<CreateRecipePage/>} />
         <Route path="/colecciones" element={<Colecciones/>} />
+        <Route path="/coleccionesinternas" element={<ColeccionesInternas/>} />
       </Routes>
       <Toaster/>
 
