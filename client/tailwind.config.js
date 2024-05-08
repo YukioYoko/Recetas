@@ -11,6 +11,8 @@ export default {
           'naranja-logo': '#ED9D20',
           'naranja-oscuro': '#C9593C',
           'beige': '#FEFBE7',
+          'rojo' : '#ED1B2E',
+          'negro' : '#030A13'
         },
       },
       fontFamily: {
