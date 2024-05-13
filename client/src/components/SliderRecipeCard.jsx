@@ -29,19 +29,19 @@ export function SliderRecipeCard() {
 
       <div className="flex gap-2 mb-[100px]">
         <Link
-          className="font-title text-sm uppercase text-custom-beige bg-custom-naranja-oscuro px-6 py-3 rounded-full"
+          className="font-title text-sm uppercase text-custom-beige bg-custom-naranja-oscuro px-6 py-2 rounded-full"
           to=""
         >
           Quinoa
         </Link>
         <Link
-          className="font-title text-sm uppercase text-custom-beige bg-custom-naranja-oscuro px-6 py-3 rounded-full"
+          className="font-title text-sm uppercase text-custom-beige bg-custom-naranja-oscuro px-6 py-2 rounded-full"
           to=""
         >
           Cebolla
         </Link>
         <Link
-          className="font-title text-sm uppercase text-custom-beige bg-custom-naranja-oscuro px-6 py-3 rounded-full"
+          className="font-title text-sm uppercase text-custom-beige bg-custom-naranja-oscuro px-6 py-2 rounded-full"
           to=""
         >
           Calabacin

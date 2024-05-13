@@ -1,17 +1,66 @@
 import { redirectDocument, useNavigate } from "react-router-dom";
+import estrella from "../images/estrella.png";
 
-export function RecipeCard({ recipe }) {
+export function RecipeCard({ recipe,categories }) {
   const navigate = useNavigate();
+
+  const renderStars = () => {
+    const stars = [];
+    for (let i = 0; i < 5; i++) {
+      if (i < recipe.valoration) {
+        stars.push(
+          <img key={i} src={estrella} alt="" className="w-[22px] h-[22px]" />
+        );
+      } else {
+        stars.push(
+          <img
+            key={i}
+            src={estrella}
+            alt=""
+            className="w-[22px] h-[22px]"
+            style={{ opacity: 0.3 }}
+          />
+        );
+      }
+    }
+    return stars;
+  };
 
   return (
     <div
-      className="bg-custom-gris p-3 hover:bg-custom-gris-oscuro hover:cursor-pointer"
+      className="w-full flex items-center justify-between rounded-2xl border-2 border-custom-naranja-oscuro p-3 hover:cursor-pointer min-h-[200px]"
       onClick={() => {
         navigate(`/recipes/${recipe.id}`);
       }}
     >
-      <h1 className="font-bold uppercase">{recipe.title}</h1>
-      <p className="text-slate-400">{recipe.description}</p>
+      <div className="grid grid-cols-2 items-center my-4 gap-3">
+        <label className="font-title uppercase text-2xl">{recipe.title}</label>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-[24px] h-[24px] text-custom-naranja-logo"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+          />
+        </svg>
+        <div className="flex gap-2 col-span-2">
+          {categories.map((category, index) => (
+            <h4
+              key={index}
+              className="font-title text-sm uppercase text-custom-beige bg-custom-naranja-oscuro px-6 py-2 rounded-full"
+            >
+              {category.name}
+            </h4>
+          ))}
+        </div>
+      </div>
+      <div className="flex gap-1 ">{renderStars()}</div>
     </div>
   );
 }

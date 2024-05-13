@@ -8,6 +8,7 @@ import { ColeccionesInternas } from "./pages/ColeccionesInternas";
 import { RegisterPage } from "./pages/RegisterPage";
 import { LoginPage } from "./pages/LoginPage";
 import { ProfilePage } from "./pages/ProfilePage";
+import { CategoriesPage } from "./pages/CategoriesPage";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/perfil" element={<ProfilePage />} />
+          <Route path="/categories" element={<CategoriesPage />} />
         </Routes>
         <Toaster />
       </div>

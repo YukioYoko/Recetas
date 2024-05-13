@@ -76,7 +76,7 @@ export function Menu() {
               </div>
             </Link>
 
-            <Link to="/categorias" onClick={() => setOpen(false)}>
+            <Link to="/categories" onClick={() => setOpen(false)}>
               <div className="flex items-center px-2  border-b-2 border-custom-naranja-oscuro py-2 hover:pl-[10px] transition-all duration-150">
                 <img
                   src={categorias}

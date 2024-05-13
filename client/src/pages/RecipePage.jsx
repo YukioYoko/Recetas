@@ -39,10 +39,10 @@ export function RecipePage() {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-4 mt-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-16">
           <div>
             <h3 className="ml-10">Ingredientes</h3>
-            <div className="flex gap-2 my-10">
+            <div className="flex gap-2 my-10 flex-wrap">
               <Link
                 className="font-title text-sm uppercase text-custom-beige bg-custom-naranja-oscuro px-6 py-3 rounded-full"
                 to=""
@@ -94,7 +94,7 @@ export function RecipePage() {
 
           <div>
             <h3 className="ml-10">Categorias</h3>
-            <div className="flex gap-2 my-10">
+            <div className="flex gap-2 my-10 flex-wrap">
               <Link
                 className="font-title text-sm uppercase text-custom-beige bg-custom-naranja-oscuro px-6 py-3 rounded-full"
                 to=""
