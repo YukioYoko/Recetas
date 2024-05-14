@@ -7,7 +7,8 @@ class User(models.Model):
     age = models.IntegerField()
     phone = models.CharField(max_length=10)
     image = models.ImageField(null=True, blank=True)
-
+    password = models.CharField(max_length=128)
+    
     def __str__(self):
         return f'{self.email} - {self.firstName}'
     
@@ -15,7 +16,7 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100)
     valoration = models.IntegerField()
     description = models.TextField(blank=True)
-    duration = models.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -67,11 +68,4 @@ class SavedRecipe(models.Model):
 
     def __str__(self):
         return f'{self.collection.name} - {self.recipe.title}'
-    
-class UploadedRecipe(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.user.firstName} - {self.recipe.title}'
     

@@ -40,8 +40,3 @@ class SavedRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SavedRecipe
         fields = '__all__'
-
-class UploadedRecipeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UploadedRecipe
-        fields = '__all__'
