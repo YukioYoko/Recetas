@@ -15,6 +15,7 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100)
     valoration = models.IntegerField()
     description = models.TextField(blank=True)
+    duration = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

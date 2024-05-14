@@ -1,7 +1,8 @@
 import { redirectDocument, useNavigate } from "react-router-dom";
 import estrella from "../images/estrella.png";
+import tiempo from "../images/tiempo.png";
 
-export function RecipeCard({ recipe,categories }) {
+export function RecipeCard({ recipe, categories, recipePhotos }) {
   const navigate = useNavigate();
 
   const renderStars = () => {
@@ -33,22 +34,33 @@ export function RecipeCard({ recipe,categories }) {
         navigate(`/recipes/${recipe.id}`);
       }}
     >
-      <div className="grid grid-cols-2 items-center my-4 gap-3">
-        <label className="font-title uppercase text-2xl">{recipe.title}</label>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-[24px] h-[24px] text-custom-naranja-logo"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+      <div className="w-1/4 h-[250px]">
+        {recipePhotos.length > 0 && (
+          <img
+            src={recipePhotos[0].photo}
+            alt="Imagen Receta"
+            className="rounded-xl w-full h-full object-cover"
           />
-        </svg>
+        )}
+      </div>
+      <div className="flex flex-col w-2/4 items-start my-4 gap-3">
+        <div className="flex items-center gap-3">
+          <label className="font-title uppercase text-2xl">{recipe.title}</label>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-[24px] h-[24px] text-custom-naranja-logo"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+            />
+          </svg>
+        </div>
         <div className="flex gap-2 col-span-2">
           {categories.map((category, index) => (
             <h4
@@ -60,7 +72,15 @@ export function RecipeCard({ recipe,categories }) {
           ))}
         </div>
       </div>
-      <div className="flex gap-1 ">{renderStars()}</div>
+      <div className="flex flex-col gap-3">
+        <div className="flex justify-end">{renderStars()}</div>
+
+        <div className="flex text-base text-black items-center font-title text-sm justify-end">
+          <img src={tiempo} alt="" className="w-[24px] h-[24px] mr-1" />
+          <label className="px-1">{recipe.duration}</label>
+          MIN
+        </div>
+      </div>
     </div>
   );
 }
