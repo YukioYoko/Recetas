@@ -11,16 +11,6 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
-            model_name='user',
-            name='age',
-        ),
-        migrations.AddField(
-            model_name='user',
-            name='date',
-            field=models.DateField(default=0),
-            preserve_default=False,
-        ),
         migrations.AddField(
             model_name='user',
             name='password',

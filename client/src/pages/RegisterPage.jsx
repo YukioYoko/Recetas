@@ -1,7 +1,7 @@
+
 // RegisterPage.js
 import logo from '../images/logo.png'
 import axios from 'axios';
-
 
 export function RegisterPage() {
   const handleSubmit = async (event) => {
@@ -9,13 +9,13 @@ export function RegisterPage() {
     const form = event.target;
 
     try {
-      const response = await axios.post('/register/', {
-        email: form.email.value,
-        firstName: form.firstName.value,
-        lastName: form.lastName.value,
+      const response = await axios.post('http://localhost:8000/tastopia/api/v1/users/', {
+        email: form.correo.value,
+        firstName: form.nombre.value,
+        lastName: form.apellido.value,
         age: form.age.value,
         phone: form.phone.value,
-        password: form.password.value
+        password: form.contrasena.value
       });
       
       console.log(response.data);

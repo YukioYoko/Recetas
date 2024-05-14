@@ -4,6 +4,7 @@ from .models import *
 
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.hashers import make_password
 from .models import User
 
 @csrf_exempt
@@ -16,6 +17,17 @@ def register_user(request):
         phone = request.POST.get('phone')
         password = request.POST.get('password')
 
+        # Validar campos
+        if not email or not firstName or not lastName or not age or not phone or not password:
+            return JsonResponse({'error': 'Todos los campos son requeridos.'}, status=400)
+
+        # Verificar si el usuario ya existe
+        if User.objects.filter(email=email).exists():
+            return JsonResponse({'error': 'El correo electrónico ya está registrado.'}, status=400)
+
+        # Hashear la contraseña
+        hashed_password = make_password(password)
+
         # Crear y guardar el nuevo usuario en la base de datos
         user = User.objects.create(
             email=email,
@@ -23,13 +35,13 @@ def register_user(request):
             lastName=lastName,
             age=age,
             phone=phone,
-            password=password
+            password=hashed_password
         )
 
         return JsonResponse({'message': 'Usuario registrado correctamente.'})
     else:
-        return JsonResponse({'error': 'Solo se permite el método POST.'})
-    
+        return JsonResponse({'error': 'Solo se permite el método POST.'}, status=405)
+
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
