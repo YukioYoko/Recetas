@@ -82,5 +82,5 @@ export function CreateRecipePage() {
             </div>
         </form>
     </div>
-  )
+  );
 }
