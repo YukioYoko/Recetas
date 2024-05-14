@@ -13,7 +13,8 @@ class User(models.Model):
     
 class Recipe(models.Model):
     title = models.CharField(max_length=100)
-    valoration = models.IntegerField()
+    duration = models.IntegerField(null=True, blank=True)
+    valoration = models.IntegerField(null=True, blank=True)
     description = models.TextField(blank=True)
 
     def __str__(self):
