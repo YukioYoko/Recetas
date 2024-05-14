@@ -19,21 +19,21 @@ export function LoginPage() {
         class="flex justify-center items-center flex-col text-xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg bg-custom-rojo "
       >
         <form class="w-3/4" action="">
-          <div className="Correo" class="flex flex-col pt-3 ">
+          <div className="email" class="flex flex-col pt-3 ">
             <label htmlFor="">CORREO</label>
             <input
               class="py-3 px-2 bg-transparent border-b placeholder-custom-negro outline-none"
               type="email"
-              name="correo"
+              name="email"
               placeholder="Ingresa tu correo electronico"
             />
           </div>
-          <div className="Contrasena" class="flex flex-col pt-3 uppercase">
+          <div className="password" class="flex flex-col pt-3 uppercase">
             <label htmlFor="">Contraseña</label>
             <input
               class="py-3 px-2 bg-transparent border-b placeholder-custom-negro outline-none"
-              type="text"
-              name="contrasena"
+              type="password"
+              name="password"
               placeholder="Ingresa tu contrasena"
             />
           </div>
