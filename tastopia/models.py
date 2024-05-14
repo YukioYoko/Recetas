@@ -8,6 +8,7 @@ class User(models.Model):
     phone = models.CharField(max_length=10)
     image = models.ImageField(null=True, blank=True)
     password = models.CharField(max_length=128)
+    
     def __str__(self):
         return f'{self.email} - {self.firstName}'
     

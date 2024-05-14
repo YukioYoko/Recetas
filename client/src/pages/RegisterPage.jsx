@@ -1,7 +1,30 @@
 // RegisterPage.js
 import logo from '../images/logo.png'
+import axios from 'axios';
+
 
 export function RegisterPage() {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.target;
+
+    try {
+      const response = await axios.post('/register/', {
+        email: form.email.value,
+        firstName: form.firstName.value,
+        lastName: form.lastName.value,
+        age: form.age.value,
+        phone: form.phone.value,
+        password: form.password.value
+      });
+      
+      console.log(response.data);
+      // Manejar la respuesta aquí, como redireccionar al usuario a otra página
+    } catch (error) {
+      console.error('Error al registrar usuario:', error);
+      // Manejar errores aquí
+    }
+  };
   return (
     <div class="grid grid-cols-2 font-body">
       <div class="flex flex-col justify-center items-center gap-10 space-x-10 h-screen">
@@ -17,7 +40,7 @@ export function RegisterPage() {
         
       </div>
       <div className="FromRegistro" class="flex justify-center items-center flex-col text-xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg bg-custom-rojo " >
-        <form  class="w-3/4" action="">
+        <form  class="w-3/4" action="" onSubmit={handleSubmit}>
             <div className='Nombre' class="flex flex-col pt-5 ">
               <label htmlFor="">NOMBRE(S)</label>
               <input class="py-3 px-2 bg-transparent border-b  placeholder-custom-negro outline-none" type="text" name="nombre" placeholder='Ingresa tu(s) nombre(s)'/>
@@ -34,9 +57,13 @@ export function RegisterPage() {
               <label htmlFor="">Contraseña</label>
               <input class="py-3 px-2 bg-transparent border-b placeholder-custom-negro outline-none" type="text" name="contrasena" placeholder='Ingresa tu contrasena'/>
             </div>
-            <div className='FechaNac' class="flex flex-col pt-3 ">
-              <label for="fecha">FECHA DE NACIMIENTO</label>
-              <input class="py-3 px-2 bg-transparent border-b text-custom-negro outline-none" type="date" id="fecha" name="fecha"/>
+            <div className='age' class="flex flex-col pt-3 ">
+              <label for="age">EDAD</label>
+              <input class="py-3 px-2 bg-transparent border-b placeholder-custom-negro outline-none text-white" type="integer" id="age" name="age" placeholder='Ingresa tu edad'/>
+            </div>
+            <div className='Phone' class="flex flex-col pt-3 ">
+              <label htmlFor="">NUMERO CELULAR</label>
+              <input class="py-3 px-2 bg-transparent border-b placeholder-custom-negro outline-none" type="text" name="phone" placeholder='Ingresa tu numero celular'/>
             </div>
             <div className='TerminosCond' class="pt-3 font-xl">
               <label for="terminos">
