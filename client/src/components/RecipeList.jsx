@@ -1,22 +1,40 @@
 import { useEffect, useState } from "react";
 import { getAllRecipes } from "../api/recipes.api";
+import { getAllCategories } from "../api/categories.api";
+import { getAllPhotos } from "../api/recipePhotos.api";
 import { RecipeCard } from "./RecipeCard";
 
 export function RecipeList() {
+  const [recipes, setRecipes] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [recipePhotos, setRecipePhotos] = useState([]);
 
-    const [recipes, setRecipes] = useState([]);
+  useEffect(() => {
+    async function loadData() {
+      const recipesRes = await getAllRecipes();
+      const categoriesRes = await getAllCategories();
+      const recipePhotosRes = await getAllPhotos();
+      setRecipes(recipesRes.data);
+      setCategories(categoriesRes.data);
+      setRecipePhotos(recipePhotosRes.data);
+    }
+    loadData();
+  }, []);
 
-    useEffect(() => {
-        async function loadRecipes() {
-            const res = await getAllRecipes();
-            setRecipes(res.data)
-        }
-        loadRecipes();
-    }, [])
+  // Función para filtrar las categorías específicas para cada receta
+  const getRecipeCategories = (recipe) => {
+    return categories.filter(category => category.recipe === recipe);
+  };
 
-    return <div className="grid grid-cols-3 gap-3">
-        {recipes.map(recipe => (
-            <RecipeCard key={recipe.id} recipe={recipe}/>
-        ))}
-    </div>;
+  const getRecipePhotos = (recipe) => {
+    return recipePhotos.filter(recipePhoto => recipePhoto.recipe === recipe);
+  };
+
+  return (
+    <div className="flex flex-col gap-3 w-full">
+      {recipes.map((recipe) => (
+        <RecipeCard key={recipe.id} recipe={recipe} categories={getRecipeCategories(recipe.id)} recipePhotos={getRecipePhotos(recipe.id)} />
+      ))}
+    </div>
+  );
 }

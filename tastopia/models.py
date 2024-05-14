@@ -49,13 +49,18 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return f'{self.recipe.title} - {self.name}'
-    
+
+def recipeDirectoryPath(instance, filename): 
+  
+    # file will be uploaded to MEDIA_ROOT / title /<filename> 
+    return 'Recipe_Images/{0}/{1}'.format(instance.recipe.title, filename) 
+
 class RecipePhoto(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to=recipeDirectoryPath)
 
     def __str__(self):
-        return f'{self.recipe.title} - {self.name}'
+        return f'{self.recipe.title} - {self.photo}'
     
 class SavedRecipe(models.Model):
     collection = models.ForeignKey(Collection, on_delete=models.CASCADE)
