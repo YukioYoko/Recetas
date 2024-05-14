@@ -73,7 +73,3 @@ class RecipePhotoView(viewsets.ModelViewSet):
 class SavedRecipeView(viewsets.ModelViewSet):
     serializer_class = SavedRecipeSerializer
     queryset = SavedRecipe.objects.all()
-
-class UploadedRecipeView(viewsets.ModelViewSet):
-    serializer_class = UploadedRecipeSerializer
-    queryset = UploadedRecipe.objects.all()

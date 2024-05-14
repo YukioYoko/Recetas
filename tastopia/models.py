@@ -16,6 +16,7 @@ class Recipe(models.Model):
     title = models.CharField(max_length=100)
     valoration = models.IntegerField()
     description = models.TextField(blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
@@ -62,11 +63,4 @@ class SavedRecipe(models.Model):
 
     def __str__(self):
         return f'{self.collection.name} - {self.recipe.title}'
-    
-class UploadedRecipe(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.user.firstName} - {self.recipe.title}'
     
