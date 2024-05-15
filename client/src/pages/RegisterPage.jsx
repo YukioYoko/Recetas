@@ -2,8 +2,10 @@
 // RegisterPage.js
 import logo from '../images/logo.png'
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 
 export function RegisterPage() {
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
@@ -19,6 +21,7 @@ export function RegisterPage() {
       });
       
       console.log(response.data);
+      navigate("/");
       // Handle the response here, such as redirecting the user to another page
     } catch (error) {
       console.error('Error registering user:', error);

@@ -54,6 +54,9 @@ class CustomObtainAuthToken(APIView):
         # You can customize the response here if needed
         return response
 
+class LogInUserView(viewsets.ModelViewSet):
+    serializer_class = CustomUserSerializer
+    queryset = CustomUser.objects.all()
 
 class CustomUserView(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer

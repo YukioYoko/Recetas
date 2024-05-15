@@ -17,5 +17,6 @@ router.register(r'saved-recipes', views.SavedRecipeView, 'saved-recipes')
 urlpatterns = [
     path("api/v1/", include(router.urls)),
     path('register/', RegisterUserView.as_view(), name='register'),  # RegisterUserView as a regular view
+    path('login/', LoginUserView.as_view(), name='login'),
     path('docs/', include_docs_urls(title="Tastopia API"))
 ]
