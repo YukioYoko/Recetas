@@ -1,5 +1,4 @@
 import logo from "../images/logo.png";
-import logo from '../images/logo.png'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom"
 
