@@ -16,9 +16,8 @@ function App() {
       <div className=" bg-custom-naranja-logo min-h-screen min-w-screen">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/recipe" element={<RecipePage />} />
           <Route path="/recipe-create" element={<CreateRecipePage />} />
-          <Route path="/recipe/:id" element={<CreateRecipePage />} />
+          <Route path="/recipe/:id" element={<RecipePage />} />
           <Route path="/colecciones" element={<Colecciones />} />
           <Route
             path="/coleccionesinternas"
