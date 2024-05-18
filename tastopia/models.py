@@ -1,17 +1,14 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 
-class User(models.Model):
-    email = models.EmailField(max_length = 254)
-    firstName = models.CharField(max_length=50)
-    lastName = models.CharField(max_length=50)
+class CustomUser(models.Model):
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE )
     age = models.IntegerField()
     phone = models.CharField(max_length=10)
     image = models.ImageField(null=True, blank=True)
-    password = models.CharField(max_length=128)
     
     def __str__(self):
-        return f'{self.email} - {self.firstName}'
+        return str(self.user)
     
 class Recipe(models.Model):
     title = models.CharField(max_length=100)
@@ -31,14 +28,14 @@ class Category(models.Model):
         return f'{self.recipe.title} - {self.name}'
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.user.firstName} - {self.category.name}'
     
 class Collection(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
 
     def __str__(self):
