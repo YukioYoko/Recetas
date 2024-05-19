@@ -3,86 +3,48 @@ from .serializer import *
 from .models import *
 
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.hashers import make_password
-from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
-from rest_framework.authtoken.views import obtain_auth_token
-from django.contrib.auth import authenticate
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import status
+from .models import User
 
+@csrf_exempt
+def register_user(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        firstName = request.POST.get('firstName')
+        lastName = request.POST.get('lastName')
+        age = request.POST.get('age')
+        phone = request.POST.get('phone')
+        password = request.POST.get('password')
 
-class RegisterUserView(APIView):
-    serializer_class = CustomUserSerializer
-    queryset = CustomUser.objects.all()
+        # Validar campos
+        if not email or not firstName or not lastName or not age or not phone or not password:
+            return JsonResponse({'error': 'Todos los campos son requeridos.'}, status=400)
 
-    def post(self, request):
-        # Extract registration data from request
-        email = request.data.get('email')
-        password = request.data.get('password')
-        firstName = request.data.get('firstName')
-        lastName = request.data.get('lastName')
-        age = request.data.get('age')
-        phone = request.data.get('phone')
-
-        # Validate registration data
-        if not email or not password or not firstName or not lastName or not age or not phone:
-            return Response({'error': 'All fields are required'}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Check if user already exists
+        # Verificar si el usuario ya existe
         if User.objects.filter(email=email).exists():
-            return Response({'error': 'Email is already registered'}, status=status.HTTP_400_BAD_REQUEST)
+            return JsonResponse({'error': 'El correo electrónico ya está registrado.'}, status=400)
 
-        # Create new user
-        user = User.objects.create_user(username=email, password=password, first_name=firstName,
-            last_name=lastName, email = email)
-        customuser = CustomUser.objects.create(
-            user=user,
+        # Hashear la contraseña
+        hashed_password = make_password(password)
+
+        # Crear y guardar el nuevo usuario en la base de datos
+        user = User.objects.create(
+            email=email,
+            firstName=firstName,
+            lastName=lastName,
             age=age,
-            phone=phone
+            phone=phone,
+            password=hashed_password
         )
 
-        # Generate token for the newly registered user
-        token = Token.objects.create(user=user)
+        return JsonResponse({'message': 'Usuario registrado correctamente.'})
+    else:
+        return JsonResponse({'error': 'Solo se permite el método POST.'}, status=405)
 
-        return Response({'message': 'User registered successfully', 'token': token.key}, status=status.HTTP_201_CREATED)
-
-
-class CustomObtainAuthToken(APIView):
-    def post(self, request, *args, **kwargs):
-        response = obtain_auth_token(request, *args, **kwargs)
-        # You can customize the response here if needed
-        return response
-
-class LoginUserView(APIView):
-    def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-
-        if not all([email, password]):
-            return Response({'error': 'Email and password are required'}, status=status.HTTP_400_BAD_REQUEST)
-
-        user = authenticate(username=email, password=password)
-
-        if user is not None:
-            token, created = Token.objects.get_or_create(user=user)
-            return Response({
-                'token': token.key,
-                'user_id': user.pk,
-                'email': user.email,
-                'first_name': user.first_name,
-                'last_name': user.last_name
-            }, status=status.HTTP_200_OK)
-        else:
-            return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
-
-
-
-
-class CustomUserView(viewsets.ModelViewSet):
-    serializer_class = CustomUserSerializer
-    queryset = CustomUser.objects.all()
+class UserView(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
 
 class RecipeView(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer

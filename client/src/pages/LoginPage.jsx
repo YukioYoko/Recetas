@@ -1,27 +1,6 @@
 import logo from "../images/logo.png";
-import axios from 'axios';
-import { useNavigate } from "react-router-dom"
 
 export function LoginPage() {
-  const navigate = useNavigate();
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const form = event.target;
-  
-    try {
-      const response = await axios.post('http://localhost:8000/tastopia/login/', {
-        email: form.email.value, 
-        password: form.password.value // Use 'password' instead of 'contrasena'
-      });
-      
-      console.log(response.data);
-      navigate("/");
-      // Handle the response here, such as redirecting the user to another page
-    } catch (error) {
-      console.error('Error registering user:', error);
-      // Handle errors here
-    }
-  };
   return (
     <div class="grid grid-cols-2 font-body">
       <div class="flex flex-col justify-center items-center gap-10 space-x-10 h-screen">
@@ -39,7 +18,7 @@ export function LoginPage() {
         className="FromRegistro"
         class="flex justify-center items-center flex-col text-xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg bg-custom-rojo "
       >
-        <form class="w-3/4" action="" onSubmit={handleSubmit}>
+        <form class="w-3/4" action="">
           <div className="email" class="flex flex-col pt-3 ">
             <label htmlFor="">CORREO</label>
             <input
