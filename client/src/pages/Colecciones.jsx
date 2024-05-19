@@ -16,15 +16,7 @@ export function Colecciones() {
           </Link>
         </div>
         <div class="grid grid-cols-3 gap-x-4 gap-y-10">
-          <CardsColecciones />
-          <CardsColecciones />
-          <CardsColecciones />
-          <CardsColecciones />
-          <CardsColecciones />
-          <CardsColecciones />
-          <CardsColecciones />
-          <CardsColecciones />
-          <CardsColecciones />
+          
         </div>
       </div>
     </div>

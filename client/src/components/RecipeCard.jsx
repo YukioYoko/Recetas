@@ -31,7 +31,7 @@ export function RecipeCard({ recipe, categories, recipePhotos }) {
     <div
       className="w-full flex items-center justify-between rounded-2xl border-2 border-custom-naranja-oscuro p-3 hover:cursor-pointer min-h-[200px]"
       onClick={() => {
-        navigate(`/recipe/${recipe.id}`);
+        navigate(`/recipes/${recipe.id}`);
       }}
     >
       <div className="w-1/4 h-[250px]">

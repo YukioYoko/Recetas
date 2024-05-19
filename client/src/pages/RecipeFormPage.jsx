@@ -56,9 +56,9 @@ export function RecipeFormPage() {
           name="title"
           placeholder="title"
           {...register("title", { required: true })}
-          className="bg-custom-gris p-3 rounded-lg block w-full mb-3"
+          className="bg-custom-gris p-3 rounded-lg block w-full"
         />
-        {errors.title && <span className="text-xl">Este Campo es Requerido</span>}
+        {errors.title && <span className="text-xs">Este Campo es Requerido</span>}
         <textarea
           rows="3"
           placeholder="Description"
