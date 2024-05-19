@@ -2,27 +2,30 @@
 // RegisterPage.js
 import logo from '../images/logo.png'
 import axios from 'axios';
+import { useNavigate } from "react-router-dom"
 
 export function RegisterPage() {
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
-
+  
     try {
-      const response = await axios.post('http://localhost:8000/tastopia/api/v1/users/', {
-        email: form.correo.value,
+      const response = await axios.post('http://localhost:8000/tastopia/register/', {
+        email: form.correo.value, // Use 'email' instead of 'correo'
         firstName: form.nombre.value,
         lastName: form.apellido.value,
         age: form.age.value,
         phone: form.phone.value,
-        password: form.contrasena.value
+        password: form.contrasena.value // Use 'password' instead of 'contrasena'
       });
       
       console.log(response.data);
-      // Manejar la respuesta aquí, como redireccionar al usuario a otra página
+      navigate("/");
+      // Handle the response here, such as redirecting the user to another page
     } catch (error) {
-      console.error('Error al registrar usuario:', error);
-      // Manejar errores aquí
+      console.error('Error registering user:', error);
+      // Handle errors here
     }
   };
   return (
