@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllCollections } from "../api/collections.api";
-import { RecipeCard } from "./RecipeCard";
+import { CardsColecciones } from "./CardsColecciones";
 
 export function CollectionList() {
   const [collections, setCollections] = useState([]);
@@ -14,9 +14,9 @@ export function CollectionList() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-3 w-full">
+    <div className="grid grid-cols-3 gap-x-4 gap-y-10">
       {collections.map((collection) => (
-        <RecipeCard key={collections.id} collection={collection} />
+        <CardsColecciones key={collection.id} collection={collection} />
       ))}
     </div>
   );
