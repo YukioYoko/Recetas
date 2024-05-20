@@ -12,7 +12,7 @@ class CustomUser(models.Model):
     
 class Recipe(models.Model):
     title = models.CharField(max_length=100)
-    valoration = models.IntegerField()
+    valoration = models.IntegerField(default=0)
     description = models.TextField(blank=True)
     duration = models.IntegerField(default=0)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
