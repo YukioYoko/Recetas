@@ -1,73 +1,75 @@
+import React, { useState } from 'react';
 import logo from "../images/logo.png";
 import axios from 'axios';
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import AlertComponent from '../components/ui/AlertComponent';
 
 export function LoginPage() {
+  const [alert, setAlert] = useState(null);
   const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
-  
+
     try {
       const response = await axios.post('http://localhost:8000/tastopia/login/', {
-        email: form.email.value, 
-        password: form.password.value // Use 'password' instead of 'contrasena'
+        email: form.email.value,
+        password: form.password.value
       });
-      
+
       console.log(response.data);
+      setAlert({ type: 'success', message: 'Inicio de sesión exitoso!' });
       navigate("/");
-      // Handle the response here, such as redirecting the user to another page
     } catch (error) {
-      console.error('Error registering user:', error);
-      // Handle errors here
+      console.error('Error al iniciar sesión:', error);
+      setAlert({ type: 'error', message: 'Error al iniciar sesión. Por favor, intente nuevamente.' });
     }
   };
+
   return (
-    <div class="grid grid-cols-2 font-body">
-      <div class="flex flex-col justify-center items-center gap-10 space-x-10 h-screen">
+    <div className="grid grid-cols-2 font-body">
+      <div className="flex flex-col justify-center items-center gap-10 space-x-10 h-screen">
         <div>
-          <img src={logo} className="w-28" />
+          <img src={logo} className="w-28" alt="Logo" />
         </div>
-        <div class="text-5xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg text-center">
+        <div className="text-5xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg text-center">
           <h2>¿Qué estás esperando?</h2>
         </div>
-        <div class="text-2xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg text-center ">
+        <div className="text-2xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg text-center">
           <h3>Sube, guarda y cocina lo que más te guste</h3>
         </div>
       </div>
-      <div
-        className="FromRegistro"
-        class="flex justify-center items-center flex-col text-xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg bg-custom-rojo "
-      >
-        <form class="w-3/4" action="" onSubmit={handleSubmit}>
-          <div className="email" class="flex flex-col pt-3 ">
-            <label htmlFor="">CORREO</label>
+      <div className="flex justify-center items-center flex-col text-xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg bg-custom-rojo">
+        <form className="w-3/4" onSubmit={handleSubmit}>
+          {alert && <AlertComponent type={alert.type} message={alert.message} />}
+          <div className="flex flex-col pt-3">
+            <label htmlFor="email">CORREO</label>
             <input
-              class="py-3 px-2 bg-transparent border-b placeholder-custom-negro outline-none"
+              className="py-3 px-2 bg-transparent border-b placeholder-custom-negro outline-none"
               type="email"
               name="email"
               placeholder="Ingresa tu correo electronico"
             />
           </div>
-          <div className="password" class="flex flex-col pt-3 uppercase">
-            <label htmlFor="">Contraseña</label>
+          <div className="flex flex-col pt-3 uppercase">
+            <label htmlFor="password">Contraseña</label>
             <input
-              class="py-3 px-2 bg-transparent border-b placeholder-custom-negro outline-none"
+              className="py-3 px-2 bg-transparent border-b placeholder-custom-negro outline-none"
               type="password"
               name="password"
-              placeholder="Ingresa tu contrasena"
+              placeholder="Ingresa tu contraseña"
             />
           </div>
-          <div class="flex justify-center items-center flex-row pl-4 pt-7">
-            <div className="SendButton">
+          <div className="flex justify-center items-center flex-row pl-4 pt-7">
+            <div>
               <input
-                class="bg-custom-naranja-logo p-3 rounded-full"
+                className="bg-custom-naranja-logo p-3 rounded-full cursor-pointer"
                 type="submit"
                 value="Ingresar"
               />
             </div>
-            <div class="pl-8"></div>
-            <div>
+            <div className="pl-8">
               <a href="../register">¿No tienes una cuenta?</a>
             </div>
           </div>
