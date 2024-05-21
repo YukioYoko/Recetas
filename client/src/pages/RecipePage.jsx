@@ -1,5 +1,5 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
-import recetaPlaceholder from "../images/receta.jpg"; 
+import recetaPlaceholder from "../images/receta.jpg";
 import tiempo from "../images/tiempo.png";
 import estrella from "../images/estrella.png";
 import { getRecipe } from "../api/recipes.api";
@@ -20,11 +20,12 @@ export function RecipePage() {
 
   useEffect(() => {
     async function loadData() {
-      const [categoriesRes, recipePhotosRes, ingredientsRes] = await Promise.all([
-        getAllCategories(),
-        getAllPhotos(),
-        getAllIngredients()
-      ]);
+      const [categoriesRes, recipePhotosRes, ingredientsRes] =
+        await Promise.all([
+          getAllCategories(),
+          getAllPhotos(),
+          getAllIngredients(),
+        ]);
       setCategories(categoriesRes.data);
       setRecipePhotos(recipePhotosRes.data);
       setIngredients(ingredientsRes.data);
@@ -45,7 +46,9 @@ export function RecipePage() {
   };
 
   const getRecipePhotos = (recipeId) => {
-    return recipePhotos.filter((recipePhoto) => recipePhoto.recipe === recipeId);
+    return recipePhotos.filter(
+      (recipePhoto) => recipePhoto.recipe === recipeId
+    );
   };
 
   const getRecipeIngredients = (recipeId) => {
@@ -67,9 +70,15 @@ export function RecipePage() {
         <div className="flex flex-row">
           <div className="w-1/2 mt-10">
             <h3 className="text-5xl my-6">{recipe.title}</h3>
+
             <div className="flex gap-1">
               {Array.from({ length: recipe.valoration }).map((_, index) => (
-                <img key={index} src={estrella} alt="" className="w-[32px] h-[32px]" />
+                <img
+                  key={index}
+                  src={estrella}
+                  alt=""
+                  className="w-[32px] h-[32px]"
+                />
               ))}
             </div>
             <div className="flex flex-row text-base mt-4 mb-10">
@@ -86,7 +95,15 @@ export function RecipePage() {
 
           <div className="w-1/2">
             <div>
-              <img src={recipePhotosData.length > 0 ? recipePhotosData[0].photo : recetaPlaceholder} alt="" className="mt-4 rounded-xl w-full" />
+              <img
+                src={
+                  recipePhotosData.length > 0
+                    ? recipePhotosData[0].photo
+                    : recetaPlaceholder
+                }
+                alt=""
+                className="mt-4 rounded-xl w-full"
+              />
             </div>
           </div>
         </div>
