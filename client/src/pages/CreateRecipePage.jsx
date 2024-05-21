@@ -8,6 +8,8 @@ import { createIngredient } from "../api/ingredients.api";
 import { createRecipePhoto } from "../api/recipePhotos.api";
 
 export function CreateRecipePage() {
+  
+  
   const navigate = useNavigate();
   const {
     register,
@@ -15,11 +17,14 @@ export function CreateRecipePage() {
     formState: { errors },
   } = useForm();
   const onSubmit = handleSubmit(async (data) => {
+    const userId = localStorage.getItem('user_id');
+    console.log(userId);
     const recipeData = {
       title: data.title,
       duration: data.duration,
       description: data.description,
       valoration: 0,
+      user: userId-1,
     };
 
     const createdRecipe = await createRecipe(recipeData); 
@@ -186,7 +191,7 @@ export function CreateRecipePage() {
             )}
           </div>
           <div className="flex flex-col justify-between gap-5 w-5/12">
-            <div>
+            {/* <div>
               <h3 className="mb-10">Fotos</h3>
               <input
                 type="file"
@@ -194,15 +199,15 @@ export function CreateRecipePage() {
                 className="text-lg"
                 {...register("recipePhoto", { required: true })}
               />
-              {/*
+              
               <Link
                 className="font-title text-xl uppercase text-custom-beige bg-custom-naranja-oscuro px-8 py-4 rounded-lg"
                 to=""
               >
                 Agregar foto
               </Link>
-              */}
-            </div>
+             
+            </div> */}
 
             <div className="flex justify-end">
               <button className="font-title text-xl uppercase text-custom-beige bg-custom-naranja-oscuro px-8 py-4 rounded-lg mb-10">

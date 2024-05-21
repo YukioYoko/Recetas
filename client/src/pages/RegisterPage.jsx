@@ -24,7 +24,7 @@ export function RegisterPage() {
 
       console.log(response.data);
       setAlert({ type: 'success', message: '¡Registro exitoso!' });
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.error('Error registrando usuario:', error);
       setAlert({ type: 'error', message: 'Error al registrarse. Por favor, intente nuevamente.' });
@@ -32,8 +32,8 @@ export function RegisterPage() {
   };
 
   return (
-    <div classNameName="grid grid-cols-2 font-body">
-      <div classNameName="flex flex-col justify-center items-center gap-10 space-x-10 h-screen">
+    <div className="grid grid-cols-2 font-body">
+      <div className="flex flex-col justify-center items-center gap-10 space-x-10 h-screen">
         <div>
           <img src={logo} className="w-28" alt="Logo" />
         </div>

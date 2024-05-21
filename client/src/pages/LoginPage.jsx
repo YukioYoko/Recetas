@@ -18,6 +18,11 @@ export function LoginPage() {
         password: form.password.value
       });
 
+      const { token, user_id } = response.data;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('user_id', user_id);
+
       console.log(response.data);
       setAlert({ type: 'success', message: 'Inicio de sesión exitoso!' });
       navigate("/");
