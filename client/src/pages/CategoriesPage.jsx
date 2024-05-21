@@ -1,97 +1,139 @@
-import React, { useState, useEffect } from 'react';
-import { NavigationLogged } from '../components/NavigationLogged';
-import { RecipeList } from '../components/RecipeList';
-import { ButtonCategoryList } from '../components/ButtonCategoryList';
-import { ButtonIngredientList } from '../components/ButtonIngredientList';
-import { getAllCategories } from '../api/categories.api';
-import { getAllIngredients } from '../api/ingredients.api';
-import { getAllRecipes } from '../api/recipes.api';  // Supongamos que tienes una función para obtener todas las recetas
+import React, { useState, useEffect } from "react";
+import { getAllRecipes } from "../api/recipes.api";
+import { getAllCategories } from "../api/categories.api";
+import { getAllIngredients } from "../api/ingredients.api";
+import { getAllPhotos } from "../api/recipePhotos.api";
+import { RecipeList } from "../components/RecipeList";
+import { NavigationLogged } from "../components/NavigationLogged";
 
 export function CategoriesPage() {
+  const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [ingredients, setIngredients] = useState([]);
-  const [allRecipes, setAllRecipes] = useState([]);  // Almacena todas las recetas
-  const [recipes, setRecipes] = useState([]);  // Almacena recetas filtradas
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const [recipePhotos, setRecipePhotos] = useState([]);
+  const [recipeCategoryMap, setRecipeCategoryMap] = useState({});
+  const [recipeIngredientMap, setRecipeIngredientMap] = useState({});
+  const [selectedCategories, setSelectedCategories] = useState({});
+  const [selectedIngredients, setSelectedIngredients] = useState({});
 
+  // Fetch data from API
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const [categoriesData, ingredientsData, recipesData] = await Promise.all([
-          getAllCategories(),
-          getAllIngredients(),
-          getAllRecipes()
-        ]);
+    async function loadData() {
+      const recipesRes = await getAllRecipes();
+      const categoriesRes = await getAllCategories();
+      const ingredientsRes = await getAllIngredients();
+      const photosRes = await getAllPhotos();
+      
+      const categories = categoriesRes.data;
+      const ingredients = ingredientsRes.data;
+      const recipes = recipesRes.data;
+      const photos = photosRes.data;
 
-        setCategories(Array.isArray(categoriesData) ? categoriesData : []);
-        setIngredients(Array.isArray(ingredientsData) ? ingredientsData : []);
-        setAllRecipes(Array.isArray(recipesData) ? recipesData : []);
-        setRecipes(Array.isArray(recipesData) ? recipesData : []);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+      setRecipes(recipes);
+      setCategories(categories);
+      setIngredients(ingredients);
+      setRecipePhotos(photos);
+
+      // Create maps for recipe-category and recipe-ingredient relationships
+      const categoryMap = categories.reduce((acc, category) => {
+        if (!acc[category.recipe]) acc[category.recipe] = [];
+        acc[category.recipe].push(category.id);
+        return acc;
+      }, {});
+
+      const ingredientMap = ingredients.reduce((acc, ingredient) => {
+        if (!acc[ingredient.recipe]) acc[ingredient.recipe] = [];
+        acc[ingredient.recipe].push(ingredient.id);
+        return acc;
+      }, {});
+
+      setRecipeCategoryMap(categoryMap);
+      setRecipeIngredientMap(ingredientMap);
+
+      // Initialize selected categories and ingredients states
+      setSelectedCategories(
+        categories.reduce((acc, category) => ({ ...acc, [category.id]: false }), {})
+      );
+      setSelectedIngredients(
+        ingredients.reduce((acc, ingredient) => ({ ...acc, [ingredient.id]: false }), {})
+      );
     }
-
-    fetchData();
+    loadData();
   }, []);
 
-  useEffect(() => {
-    function filterRecipes() {
-      let filteredRecipes = allRecipes;
-  
-      if (selectedCategories.length > 0) {
-        // Filtrar por categorías (si se seleccionaron)
-        filteredRecipes = filteredRecipes.filter(recipe =>
-          selectedCategories.some(categoryId =>
-            recipe.title.toLowerCase().includes(categories[categoryId].toLowerCase())
-          )
-        );
-      }
-  
-      if (selectedIngredients.length > 0) {
-        // Filtrar por ingredientes (si se seleccionaron)
-        filteredRecipes = filteredRecipes.filter(recipe =>
-          selectedIngredients.some(ingredientId =>
-            recipe.description.toLowerCase().includes(ingredients[ingredientId].toLowerCase())
-          )
-        );
-      }
-  
-      setRecipes(filteredRecipes);
+  // Handle checkbox changes for categories and ingredients
+  const handleOnCheckbox = (type, e) => {
+    const { value, checked } = e.target;
+    if (type === "category") {
+      setSelectedCategories({ ...selectedCategories, [value]: checked });
+    } else if (type === "ingredient") {
+      setSelectedIngredients({ ...selectedIngredients, [value]: checked });
     }
-  
-    filterRecipes();
-  }, [selectedCategories, selectedIngredients, allRecipes, categories, ingredients]);
-  
-
-  const handleCategoryClick = (category) => {
-    setSelectedCategories(prevSelected =>
-      prevSelected.includes(category.id)
-        ? prevSelected.filter(c => c !== category.id)
-        : [...prevSelected, category.id]
-    );
   };
 
-  const handleIngredientClick = (ingredient) => {
-    setSelectedIngredients(prevSelected =>
-      prevSelected.includes(ingredient.id)
-        ? prevSelected.filter(i => i !== ingredient.id)
-        : [...prevSelected, ingredient.id]
+  // Filter recipes based on selected categories and ingredients
+  const isAnyCategorySelected = Object.values(selectedCategories).some(Boolean);
+  const isAnyIngredientSelected = Object.values(selectedIngredients).some(Boolean);
+
+  const filteredRecipes = recipes.filter(recipe => {
+    if (!isAnyCategorySelected && !isAnyIngredientSelected) {
+      return true; // Show all recipes if no category or ingredient is selected
+    }
+
+    const recipeCategories = recipeCategoryMap[recipe.id] || [];
+    const recipeIngredients = recipeIngredientMap[recipe.id] || [];
+
+    const matchCategory = recipeCategories.some(
+      categoryId => selectedCategories[categoryId]
     );
-  };
+    const matchIngredient = recipeIngredients.some(
+      ingredientId => selectedIngredients[ingredientId]
+    );
+
+    return matchCategory || matchIngredient;
+  });
 
   return (
     <div className="bg-custom-beige min-h-screen">
       <NavigationLogged />
       <div className="py-10 px-10">
-        <div className="flex">
-          <aside className="w-1/4">
-            <ButtonCategoryList categories={categories} onCategoryClick={handleCategoryClick} selectedCategories={selectedCategories} />
-            <ButtonIngredientList ingredients={ingredients} onIngredientClick={handleIngredientClick} selectedIngredients={selectedIngredients} />
+        <div className="flex gap-10">
+          <aside className="w-2/12">
+            <h3 className="font-title text-bold text-2xl border-b-2 border-black py-2 mb-3">Categorías</h3>
+            {categories.map(category => (
+              <div key={category.id} className="px-5">
+                <input
+                  onChange={e => handleOnCheckbox("category", e)}
+                  className=" accent-custom-naranja-oscuro"
+                  type="checkbox"
+                  name="categories"
+                  value={category.id}
+                  id={category.name}
+                />
+                <label className ="font-body capitalize pl-2 font-light text-lg" htmlFor={category.name}>{category.name}</label>
+              </div>
+            ))}
+            <h3 className="font-title text-bold text-2xl border-b-2 border-black py-2 mb-3">Ingredientes</h3>
+            {ingredients.map(ingredient => (
+              <div key={ingredient.id} className="px-5">
+                <input
+                  onChange={e => handleOnCheckbox("ingredient", e)}
+                  className=" accent-custom-naranja-oscuro"
+                  type="checkbox"
+                  name="ingredients"
+                  value={ingredient.id}
+                  id={ingredient.name}
+                />
+                <label className ="font-body capitalize pl-2 font-light text-lg" htmlFor={ingredient.name}>{ingredient.name}</label>
+              </div>
+            ))}
           </aside>
-          <div className="w-3/4">
-            <RecipeList recipes={recipes} />
+          <div className="w-10/12">
+            <RecipeList 
+              recipes={filteredRecipes} 
+              categories={categories} 
+              recipePhotos={recipePhotos} 
+            />
           </div>
         </div>
       </div>
