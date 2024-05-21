@@ -6,7 +6,7 @@ import SearchBar from "./SearchBar";
 
 export function NavigationLogged() {
   return (
-    <div className="flex justify-between items-center py-3 bg-custom-naranja-oscuro px-10">
+    <div className="flex justify-between items-center py-3 bg-custom-naranja-oscuro px-10 relative z-20">
       <Link to="/">
         <img src={logo} className="w-28" />
       </Link>
