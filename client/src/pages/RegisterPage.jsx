@@ -32,15 +32,15 @@ export function RegisterPage() {
   };
 
   return (
-    <div className="grid grid-cols-2 font-body">
-      <div className="flex flex-col justify-center items-center gap-10 space-x-10 h-screen">
+    <div classNameName="grid grid-cols-2 font-body">
+      <div classNameName="flex flex-col justify-center items-center gap-10 space-x-10 h-screen">
         <div>
           <img src={logo} className="w-28" alt="Logo" />
         </div>
         <div className="text-5xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg text-center">
           <h2>¿Qué estás esperando?</h2>
         </div>
-        <div className="text-2xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg text-center">
+        <div classNameName="text-2xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg text-center">
           <h3>Sube, guarda y cocina lo que más te guste</h3>
         </div>
       </div>

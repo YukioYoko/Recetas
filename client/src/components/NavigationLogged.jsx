@@ -5,7 +5,7 @@ import { Menu } from "./Menu";
 
 export function NavigationLogged() {
   return (
-    <div className="flex justify-between items-center py-3 bg-custom-naranja-oscuro px-10">
+    <div className="flex justify-between items-center py-3 bg-custom-naranja-oscuro px-10 relative z-20">
       <Link to="/">
         <img src={logo} className="w-28" />
       </Link>
@@ -13,7 +13,7 @@ export function NavigationLogged() {
         <input
           type="text"
           className="font-body text-xl bg-inherit w-full focus:outline-none"
-          placeholder="Que vamos a comer hoy?"
+          placeholder="¿Qué vamos a comer hoy?"
         />
         <img src={buscar} alt="" className="w-7 " />
       </div>
