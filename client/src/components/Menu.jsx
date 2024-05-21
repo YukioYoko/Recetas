@@ -26,13 +26,13 @@ export function Menu() {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="1.5"
+          strokeWidth="1.5"
           stroke="currentColor"
-          class="w-8 h-8"
+          className="w-8 h-8"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
           />
         </svg>
@@ -48,7 +48,7 @@ export function Menu() {
       <div
         className={`${
           open ? "w-[500px]" : "w-0"
-        } bg-custom-beige min-h-screen fixed top-0 right-0 transition-all duration-300 overflow-hidden`}
+        } bg-custom-beige min-h-screen fixed top-0 right-0 transition-all duration-300 overflow-hidden border-custom-naranja-oscuro border-l`}
       >
         <div
           className={`${!open && "hidden"} flex flex-col pt-12 pr-6 items-end`}
@@ -61,13 +61,13 @@ export function Menu() {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
-              class="w-8 h-8"
+              className="w-8 h-8"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M6 18 18 6M6 6l12 12"
               />
             </svg>

@@ -2,7 +2,7 @@ import { redirectDocument, useNavigate } from "react-router-dom";
 import estrella from "../images/estrella.png";
 import tiempo from "../images/tiempo.png";
 
-export function RecipeCard({ recipe, categories, recipePhotos }) {
+export function RecipeSearchCard({ recipe, categories, recipePhotos }) {
   const navigate = useNavigate();
 
   const renderStars = () => {
@@ -29,12 +29,12 @@ export function RecipeCard({ recipe, categories, recipePhotos }) {
 
   return (
     <div
-      className="w-full flex items-center justify-between rounded-2xl border-2 border-custom-naranja-oscuro p-3 hover:cursor-pointer min-h-[200px]"
+      className="w-full flex items-center justify-between border-b-2 border-custom-naranja-oscuro p-3 hover:cursor-pointer min-h-[100px]"
       onClick={() => {
         navigate(`/recipe/${recipe.id}`);
       }}
     >
-      <div className="w-1/4 h-[250px]">
+      <div className="w-1/4 h-[150px]">
         {recipePhotos.length > 0 && (
           <img
             src={recipePhotos[0].photo}
@@ -46,20 +46,6 @@ export function RecipeCard({ recipe, categories, recipePhotos }) {
       <div className="flex flex-col w-2/4 items-start my-4 gap-3">
         <div className="flex items-center gap-3">
           <label className="font-title uppercase text-2xl">{recipe.title}</label>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-[24px] h-[24px] text-custom-naranja-logo"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-            />
-          </svg>
         </div>
         <div className="flex gap-2 col-span-2">
           {categories.map((category, index) => (
