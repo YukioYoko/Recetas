@@ -22,11 +22,18 @@ export function LoginPage() {
         }
       );
 
-      const { token, user_id } = response.data;
-      localStorage.setItem("token", token);
-      localStorage.setItem("user_id", user_id);
+      const { token, user_id, first_name, last_name, age, phone, email} = response.data;
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('user_id', user_id);
+      localStorage.setItem('first_name', first_name);
+      localStorage.setItem('last_name', last_name);
+      localStorage.setItem('age', age);
+      localStorage.setItem('phone', phone);
+      localStorage.setItem('email', email);
+
       console.log(response.data);
-      setAlert({ type: "success", message: "Inicio de sesión exitoso!" });
+      setAlert({ type: 'success', message: 'Inicio de sesión exitoso!' })
       navigate("/");
       window.location.reload();
     } catch (error) {

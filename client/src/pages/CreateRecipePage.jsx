@@ -52,7 +52,7 @@ export function CreateRecipePage() {
       duration: data.duration,
       description: data.description,
       valoration: 0,
-      user: userId - 1,
+      user: userId,
     };
 
     const createdRecipe = await createRecipe(recipeData);
