@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework import generics
 from .serializer import *
 from .models import *
 from rest_framework import generics, permissions
@@ -108,6 +109,11 @@ class LikeView(viewsets.ModelViewSet):
 class CollectionView(viewsets.ModelViewSet):
     serializer_class = CollectionSerializer
     queryset = Collection.objects.all()
+    def get_queryset(self):
+        user_id = self.request.query_params.get('user', None)
+        if user_id is not None:
+            return Collection.objects.filter(user__id=user_id)
+        return super().get_queryset()
 
 class IngredientView(viewsets.ModelViewSet):
     serializer_class = IngredientSerializer
@@ -117,6 +123,20 @@ class RecipePhotoView(viewsets.ModelViewSet):
     serializer_class = RecipePhotoSerializer
     queryset = RecipePhoto.objects.all()
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 class SavedRecipeView(viewsets.ModelViewSet):
     serializer_class = SavedRecipeSerializer
     queryset = SavedRecipe.objects.all()
+
+class SavedRecipeByCollectionView(generics.ListAPIView):
+    serializer_class = SavedRecipeSerializer
+
+    def get_queryset(self):
+        collection_id = self.kwargs['collection_id']
+        return SavedRecipe.objects.filter(collection_id=collection_id)

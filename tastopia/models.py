@@ -18,7 +18,7 @@ class Recipe(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return self.title + " - " + str(self.user)
 
 class Category(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
@@ -32,14 +32,14 @@ class Like(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.user.firstName} - {self.category.name}'
+        return f'{self.user} - {self.category.name}'
     
 class Collection(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
 
     def __str__(self):
-        return f'{self.user.firstName} - {self.name}'
+        return f'{self.user} - {self.name}'
     
     
 class Ingredient(models.Model):

@@ -3,6 +3,7 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework import routers
 from tastopia import views
 from .views import RegisterUserView, LoginUserView
+from .views import SavedRecipeByCollectionView
 
 router = routers.DefaultRouter()
 router.register(r'users', views.CustomUserView, 'users')
@@ -18,8 +19,7 @@ urlpatterns = [
     path("api/v1/", include(router.urls)),
     path('register/', RegisterUserView.as_view(), name='register'),  # RegisterUserView as a regular view
     path('login/', LoginUserView.as_view(), name='login'),
-    #path('profile/', ProfileView.as_view(), name='profile'),
-    #path('profile/<int:user_id>/', ProfileView.as_view(), name='profile'),
+    path('saved-recipes/<int:collection_id>/', SavedRecipeByCollectionView.as_view(), name='saved-recipes-by-collection'),
     path('docs/', include_docs_urls(title="Tastopia API"))
 ]
 
