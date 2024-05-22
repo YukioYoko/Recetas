@@ -99,6 +99,11 @@ class LikeView(viewsets.ModelViewSet):
 class CollectionView(viewsets.ModelViewSet):
     serializer_class = CollectionSerializer
     queryset = Collection.objects.all()
+    def get_queryset(self):
+        user_id = self.request.query_params.get('user', None)
+        if user_id is not None:
+            return Collection.objects.filter(user__id=user_id)
+        return super().get_queryset()
 
 class IngredientView(viewsets.ModelViewSet):
     serializer_class = IngredientSerializer

@@ -5,6 +5,7 @@ import estrella from "../images/estrella.png";
 import { Modal } from "./PopupGuardarReceta";
 
 export function SliderRecipeCard({ recipe, categories, recipePhotos }) {
+  const userId = localStorage.getItem('user_id');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -85,10 +86,7 @@ export function SliderRecipeCard({ recipe, categories, recipePhotos }) {
         <div className="flex justify-end">{renderStars()}</div>
       </div>
       {isModalOpen && (
-        <Modal onClose={() => setIsModalOpen(false)}>
-          <h2>Guardar Receta</h2>
-          <p>¿Deseas guardar esta receta?</p>
-        </Modal>
+        <Modal onClose={() => setIsModalOpen(false)} recipe={recipe.id}/>
       )}
     </div>
   );
