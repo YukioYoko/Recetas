@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import candado from "../images/candado.png";
 import editar from "../images/editar.png";
 import perfil from "../images/perfil.png";
@@ -8,14 +8,22 @@ import { getProfile, updateProfile } from '../api/profile';
 import { NavigationLogged } from "../components/NavigationLogged";
 
 export function ProfilePage() {
-  const [profile, setProfile] = useState({ user: { first_name: '', last_name: '' } });
+  const { id } = useParams();
+  const {
+    register,
+    handleSubmit,
+    formState: {errors},
+    setValue,
+  } = useForm();
+  const [profile, setProfile] = useState(null);
 
-  const id = localStorage.getItem('user_id');
+  const id_user = localStorage.getItem('user_id');
 
   useEffect(() => {
     async function loadData() {
       try {
-        const profileData = await getProfile(id);
+        const response = await getProfile(id_user);
+        const profileData = response.data;
         setProfile(profileData);
         console.log(profileData);
       } catch (error) {
@@ -26,27 +34,39 @@ export function ProfilePage() {
     loadData();
   }, [id]);
 
-  const { handleSubmit, register } = useForm();
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await getProfile(id_user);
+        const profileData = response.data;
+        setProfile(profileData);
+        setValue("first_name", profileData.first_name);
+        setValue("last_name", profileData.last_name);
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+      }
+    }
+
+    fetchData();
+  }, [id]);
+
   
   const onSubmit = handleSubmit(async (data) => {
-    
+    const age = localStorage.getItem('age');
+    const phone = localStorage.getItem('phone');
+    const email = localStorage.getItem('email') ; 
     const profileData = {
-      first_name: first_na,
-      last_name: last_na,
-      age: ageLocal,
-      phone: phoneLocal,
-      email: emailLocal
+      "first_name": data.first_name,
+      "last_name": data.last_name,
+      "age": age,
+      "phone": phone,
+      "email": email,
+      "username": email
     };
-    await updateProfile(id, profileData);
+    console.log(profileData);
+    await updateProfile(id_user, profileData);
   });
 
-  const ageLocal = localStorage.getItem('age');
-  const phoneLocal = localStorage.getItem('phone');
-  const emailLocal = localStorage.getItem('email');
-  const first_na = localStorage.getItem('first_name') ;
-  const last_na = localStorage.getItem('last_name') ;
-  
-  console.log(localStorage.getItem('data') );
 
   return (
     <div>
@@ -70,7 +90,6 @@ export function ProfilePage() {
             <input
               type="text"
               name="first_name"
-              value={first_na}
               {...register("first_name", { required: true })}
               className="text-2xl font-normal border border-custom-naranja-oscuro focus:outline-none rounded-md p-2 mt-3 mb-10"
             />
@@ -80,7 +99,6 @@ export function ProfilePage() {
             <input
               type="text"
               name="last_name"
-              value={last_na}
               {...register("last_name", { required: true })}
               className="text-2xl font-normal border border-custom-naranja-oscuro focus:outline-none rounded-md p-2 mt-3 mb-10"
             />
