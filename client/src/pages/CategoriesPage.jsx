@@ -29,9 +29,16 @@ export function CategoriesPage() {
       const recipes = recipesRes.data;
       const photos = photosRes.data;
 
+      // Use Set to remove duplicates
+      const uniqueCategories = Array.from(new Set(categories.map(c => c.name)))
+        .map(name => categories.find(c => c.name === name));
+      
+      const uniqueIngredients = Array.from(new Set(ingredients.map(i => i.name)))
+        .map(name => ingredients.find(i => i.name === name));
+
       setRecipes(recipes);
-      setCategories(categories);
-      setIngredients(ingredients);
+      setCategories(uniqueCategories);
+      setIngredients(uniqueIngredients);
       setRecipePhotos(photos);
 
       // Create maps for recipe-category and recipe-ingredient relationships
@@ -52,10 +59,10 @@ export function CategoriesPage() {
 
       // Initialize selected categories and ingredients states
       setSelectedCategories(
-        categories.reduce((acc, category) => ({ ...acc, [category.id]: false }), {})
+        uniqueCategories.reduce((acc, category) => ({ ...acc, [category.id]: false }), {})
       );
       setSelectedIngredients(
-        ingredients.reduce((acc, ingredient) => ({ ...acc, [ingredient.id]: false }), {})
+        uniqueIngredients.reduce((acc, ingredient) => ({ ...acc, [ingredient.id]: false }), {})
       );
     }
     loadData();
@@ -95,7 +102,6 @@ export function CategoriesPage() {
 
   return (
     <div className="bg-custom-beige min-h-screen">
-      <NavigationLogged />
       <div className="py-10 px-10">
         <div className="flex gap-10">
           <aside className="w-2/12">
@@ -104,13 +110,13 @@ export function CategoriesPage() {
               <div key={category.id} className="px-5">
                 <input
                   onChange={e => handleOnCheckbox("category", e)}
-                  className=" accent-custom-naranja-oscuro"
+                  className="accent-custom-naranja-oscuro"
                   type="checkbox"
                   name="categories"
                   value={category.id}
                   id={category.name}
                 />
-                <label className ="font-body capitalize pl-2 font-light text-lg" htmlFor={category.name}>{category.name}</label>
+                <label className="font-body capitalize pl-2 font-light text-lg" htmlFor={category.name}>{category.name}</label>
               </div>
             ))}
             <h3 className="font-title text-bold text-2xl border-b-2 border-black py-2 mb-3">Ingredientes</h3>
@@ -118,13 +124,13 @@ export function CategoriesPage() {
               <div key={ingredient.id} className="px-5">
                 <input
                   onChange={e => handleOnCheckbox("ingredient", e)}
-                  className=" accent-custom-naranja-oscuro"
+                  className="accent-custom-naranja-oscuro"
                   type="checkbox"
                   name="ingredients"
                   value={ingredient.id}
                   id={ingredient.name}
                 />
-                <label className ="font-body capitalize pl-2 font-light text-lg" htmlFor={ingredient.name}>{ingredient.name}</label>
+                <label className="font-body capitalize pl-2 font-light text-lg" htmlFor={ingredient.name}>{ingredient.name}</label>
               </div>
             ))}
           </aside>

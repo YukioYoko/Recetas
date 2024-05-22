@@ -7,7 +7,6 @@ import { NavigationLogged } from "../components/NavigationLogged";
 export function ProfilePage() {
   return (
     <div>
-      <NavigationLogged />
       <div className="flex pt-20 px-10 font-body font-bold text-3xl min-h-screen text-custom-naranja-oscuro bg-custom-beige justify-around">
         <div className="flex justify-end relative">
           <Link to="" className="absolute w-[50px] h-[50px]">

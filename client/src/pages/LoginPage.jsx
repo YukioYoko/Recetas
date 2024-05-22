@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import logo from "../images/logo.png";
-import axios from 'axios';
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import AlertComponent from '../components/ui/AlertComponent';
+import AlertComponent from "../components/ui/AlertComponent";
+import { Link } from "react-router-dom";
 
 export function LoginPage() {
   const [alert, setAlert] = useState(null);
@@ -13,22 +14,27 @@ export function LoginPage() {
     const form = event.target;
 
     try {
-      const response = await axios.post('http://localhost:8000/tastopia/login/', {
-        email: form.email.value,
-        password: form.password.value
-      });
+      const response = await axios.post(
+        "http://localhost:8000/tastopia/login/",
+        {
+          email: form.email.value,
+          password: form.password.value,
+        }
+      );
 
       const { token, user_id } = response.data;
-
-      localStorage.setItem('token', token);
-      localStorage.setItem('user_id', user_id);
-
+      localStorage.setItem("token", token);
+      localStorage.setItem("user_id", user_id);
       console.log(response.data);
-      setAlert({ type: 'success', message: 'Inicio de sesión exitoso!' });
+      setAlert({ type: "success", message: "Inicio de sesión exitoso!" });
       navigate("/");
+      window.location.reload();
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      setAlert({ type: 'error', message: 'Error al iniciar sesión. Por favor, intente nuevamente.' });
+      console.error("Error al iniciar sesión:", error);
+      setAlert({
+        type: "error",
+        message: "Error al iniciar sesión. Por favor, intente nuevamente.",
+      });
     }
   };
 
@@ -36,7 +42,9 @@ export function LoginPage() {
     <div className="grid grid-cols-2 font-body">
       <div className="flex flex-col justify-center items-center gap-10 space-x-10 h-screen">
         <div>
-          <img src={logo} className="w-28" alt="Logo" />
+          <Link to="/">
+            <img src={logo} className="w-28" />
+          </Link>
         </div>
         <div className="text-5xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg text-center">
           <h2>¿Qué estás esperando?</h2>
@@ -47,7 +55,9 @@ export function LoginPage() {
       </div>
       <div className="flex justify-center items-center flex-col text-xl text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg bg-custom-rojo">
         <form className="w-3/4" onSubmit={handleSubmit}>
-          {alert && <AlertComponent type={alert.type} message={alert.message} />}
+          {alert && (
+            <AlertComponent type={alert.type} message={alert.message} />
+          )}
           <div className="flex flex-col pt-3">
             <label htmlFor="email">CORREO</label>
             <input
