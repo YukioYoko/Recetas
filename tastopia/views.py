@@ -114,6 +114,13 @@ class RecipePhotoView(viewsets.ModelViewSet):
     serializer_class = RecipePhotoSerializer
     queryset = RecipePhoto.objects.all()
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
 class SavedRecipeView(viewsets.ModelViewSet):
     serializer_class = SavedRecipeSerializer
     queryset = SavedRecipe.objects.all()

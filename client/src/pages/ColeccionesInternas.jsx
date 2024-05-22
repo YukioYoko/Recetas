@@ -22,6 +22,7 @@ export function ColeccionesInternas() {
   }, [collectionId]);
 
   return (
+
     <div className="bg-custom-beige min-h-screen pt-10 px-24">
       <NavigationLogged />
       <div className="font-title text-7xl py-4">RECETAS ITALIANAS</div>

@@ -9,7 +9,6 @@ export function Colecciones() {
 
   return (
     <div>
-      <NavigationLogged />
       <div className="bg-custom-beige min-h-screen pt-10 px-24 ">
         <div className="mb-12">
           <button

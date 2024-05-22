@@ -9,21 +9,26 @@ import { RegisterPage } from "./pages/RegisterPage";
 import { LoginPage } from "./pages/LoginPage";
 import { ProfilePage } from "./pages/ProfilePage";
 import { CategoriesPage } from "./pages/CategoriesPage";
+import { Navigation } from "./components/Navigation";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 function App() {
   return (
     <BrowserRouter>
-      <div className=" bg-custom-naranja-logo min-h-screen min-w-screen">
+      <div className="bg-custom-naranja-logo min-h-screen min-w-screen">
+        <Navigation />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/recipe-create" element={<CreateRecipePage />} />
           <Route path="/recipe/:id" element={<RecipePage />} />
-          <Route path="/colecciones" element={<Colecciones />} />
-          <Route path="/coleccionesinternas" element={<ColeccionesInternas />}/>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/perfil" element={<ProfilePage />} />
           <Route path="/categories" element={<CategoriesPage />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="/recipe-create" element={<CreateRecipePage />} />
+            <Route path="/colecciones" element={<Colecciones />} />
+            <Route path="/coleccionesinternas" element={<ColeccionesInternas />} />
+            <Route path="/perfil" element={<ProfilePage />} />
+          </Route>
         </Routes>
         <Toaster />
       </div>
@@ -32,3 +37,4 @@ function App() {
 }
 
 export default App;
+

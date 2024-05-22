@@ -6,9 +6,6 @@ import receta from "../images/receta.jpg";
 export function HomePage() {
   return (
     <div className="">
-      <div className="z-20">
-        <NavigationLogged/>
-      </div>
       <div className="relative h-screen bg-cover bg-center z-0" style={{ backgroundImage: `url(${receta})` }}>
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="absolute inset-0 flex flex-col justify-center items-center text-center font-title">

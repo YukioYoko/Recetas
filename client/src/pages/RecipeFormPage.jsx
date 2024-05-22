@@ -49,7 +49,6 @@ export function RecipeFormPage() {
 
   return (
     <div className="maxv-w-xl mx-auto">
-      <NavigationLogged />
       <form onSubmit={onSubmit}>
         <input
           type="text"

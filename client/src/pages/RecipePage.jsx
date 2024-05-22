@@ -65,7 +65,6 @@ export function RecipePage() {
 
   return (
     <div>
-      <NavigationLogged />
       <div className="py-10 px-10 font-title font-bold text-3xl min-h-screen text-custom-naranja-oscuro bg-custom-beige justify-around">
         <div className="flex flex-row">
           <div className="w-1/2 mt-10">
