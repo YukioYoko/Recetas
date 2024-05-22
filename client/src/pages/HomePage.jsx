@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { SliderRecipe } from "../components/SliderRecipe";
 import { NavigationLogged } from "../components/NavigationLogged";
 import receta from "../images/receta.jpg";
@@ -20,6 +21,7 @@ export function HomePage() {
         <h2 className="text-center my-2">Nuestras favoritas</h2>
         <SliderRecipe />
       </div>
+      
     </div>
   );
 }
