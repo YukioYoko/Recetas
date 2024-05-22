@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from .models import *
 
-class UserSerializer(serializers.ModelSerializer):
+class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = CustomUser
         fields = '__all__'
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -39,9 +39,4 @@ class RecipePhotoSerializer(serializers.ModelSerializer):
 class SavedRecipeSerializer(serializers.ModelSerializer):
     class Meta:
         model = SavedRecipe
-        fields = '__all__'
-
-class UploadedRecipeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = UploadedRecipe
         fields = '__all__'

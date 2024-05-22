@@ -1,22 +1,26 @@
-import { useEffect, useState } from "react";
-import { getAllRecipes } from "../api/recipes.api";
+import React from "react";
 import { RecipeCard } from "./RecipeCard";
 
-export function RecipeList() {
+export function RecipeList({ recipes, categories, recipePhotos }) {
+  // Función para filtrar las categorías específicas para cada receta
+  const getRecipeCategories = (recipeId) => {
+    return categories.filter(category => category.recipe === recipeId);
+  };
 
-    const [recipes, setRecipes] = useState([]);
+  const getRecipePhotos = (recipeId) => {
+    return recipePhotos.filter(photo => photo.recipe === recipeId);
+  };
 
-    useEffect(() => {
-        async function loadRecipes() {
-            const res = await getAllRecipes();
-            setRecipes(res.data)
-        }
-        loadRecipes();
-    }, [])
-
-    return <div className="grid grid-cols-3 gap-3">
-        {recipes.map(recipe => (
-            <RecipeCard key={recipe.id} recipe={recipe}/>
-        ))}
-    </div>;
+  return (
+    <div className="flex flex-col gap-3 w-full">
+      {recipes.map((recipe) => (
+        <RecipeCard 
+          key={recipe.id} 
+          recipe={recipe} 
+          categories={getRecipeCategories(recipe.id)} 
+          recipePhotos={getRecipePhotos(recipe.id)} 
+        />
+      ))}
+    </div>
+  );
 }

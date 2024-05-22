@@ -9,3 +9,4 @@ export const getRecipe = (id) =>  recipeApi.get(`/${id}/`)
 export const createRecipe = (recipe) => recipeApi.post('/', recipe)
 export const deleteRecipe = (id) => recipeApi.delete(`/${id}`)
 export const updateRecipe = (id, recipe) => recipeApi.put(`/${id}/`, recipe)
+
