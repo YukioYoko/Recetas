@@ -5,15 +5,16 @@ import agregar from "../images/agregar.png";
 import categorias from "../images/categorias.png";
 import colecciones from "../images/colecciones.png";
 import perfil from "../images/perfil.png";
+import recetas from "../images/recetas.png";
 import salir from "../images/salida.png";
 
 export function Menu() {
   const [open, setOpen] = useState(false);
   function handleLogout(setOpen) {
-    localStorage.setItem('token', "");
-    localStorage.setItem('user_id', -1);
+    localStorage.setItem("token", "");
+    localStorage.setItem("user_id", -1);
     setOpen(false);
-    const userId = localStorage.getItem('user_id');
+    const userId = localStorage.getItem("user_id");
     console.log(userId); // Si necesitas hacer algo con el userId
   }
   return (
@@ -106,10 +107,16 @@ export function Menu() {
               </div>
             </Link>
 
-            <Link to="/perfil" onClick={() => setOpen(false)}>
+            <Link to="/profile" onClick={() => setOpen(false)}>
               <div className="flex items-center px-2  border-b-2 border-custom-naranja-oscuro py-2 hover:pl-[10px] transition-all duration-150">
                 <img src={perfil} alt="Perfil" className="w-8 h-8 mr-5" />
                 Mi Perfil
+              </div>
+            </Link>
+            <Link to="/user-recipes" onClick={() => setOpen(false)}>
+              <div className="flex items-center px-2  border-b-2 border-custom-naranja-oscuro py-2 hover:pl-[10px] transition-all duration-150">
+                <img src={recetas} alt="Perfil" className="w-8 h-8 mr-5" />
+                Mis Recetas
               </div>
             </Link>
             <Link to="#" onClick={() => handleLogout(setOpen(false))}>

@@ -22,3 +22,4 @@ urlpatterns = [
     path('saved-recipes/<int:collection_id>/', SavedRecipeByCollectionView.as_view(), name='saved-recipes-by-collection'),
     path('docs/', include_docs_urls(title="Tastopia API"))
 ]
+
