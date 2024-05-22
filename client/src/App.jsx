@@ -25,7 +25,8 @@ function App() {
           />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/perfil" element={<ProfilePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/profile/:id" element={<ProfilePage />} />
           <Route path="/categories" element={<CategoriesPage />} />
         </Routes>
         <Toaster />

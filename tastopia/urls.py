@@ -18,5 +18,8 @@ urlpatterns = [
     path("api/v1/", include(router.urls)),
     path('register/', RegisterUserView.as_view(), name='register'),  # RegisterUserView as a regular view
     path('login/', LoginUserView.as_view(), name='login'),
+    #path('profile/', ProfileView.as_view(), name='profile'),
+    #path('profile/<int:user_id>/', ProfileView.as_view(), name='profile'),
     path('docs/', include_docs_urls(title="Tastopia API"))
 ]
+

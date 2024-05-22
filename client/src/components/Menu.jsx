@@ -98,7 +98,7 @@ export function Menu() {
               </div>
             </Link>
 
-            <Link to="/perfil" onClick={() => setOpen(false)}>
+            <Link to="/profile" onClick={() => setOpen(false)}>
               <div className="flex items-center px-2  border-b-2 border-custom-naranja-oscuro py-2 hover:pl-[10px] transition-all duration-150">
                 <img src={perfil} alt="Perfil" className="w-8 h-8 mr-5" />
                 Mi Perfil

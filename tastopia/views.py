@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from .serializer import *
 from .models import *
-
+from rest_framework import generics, permissions
 from django.http import JsonResponse
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from .models import CustomUser
 
 
 class RegisterUserView(APIView):
@@ -64,15 +65,19 @@ class LoginUserView(APIView):
             return Response({'error': 'Email and password are required'}, status=status.HTTP_400_BAD_REQUEST)
 
         user = authenticate(username=email, password=password)
-
+        
         if user is not None:
             token, created = Token.objects.get_or_create(user=user)
+            custom_user = CustomUser.objects.get(user=user) 
+                
             return Response({
                 'token': token.key,
-                'user_id': user.pk,
+                'user_id': custom_user.pk, 
                 'email': user.email,
                 'first_name': user.first_name,
-                'last_name': user.last_name
+                'last_name': user.last_name,
+                'age' : custom_user.age,
+                'phone' : custom_user.phone,
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
@@ -80,9 +85,13 @@ class LoginUserView(APIView):
 
 
 
+from rest_framework import viewsets
+from django.contrib.auth.models import User
+
 class CustomUserView(viewsets.ModelViewSet):
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
+
 
 class RecipeView(viewsets.ModelViewSet):
     serializer_class = RecipeSerializer
