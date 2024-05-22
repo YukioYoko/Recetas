@@ -44,7 +44,7 @@ export function Modal({ onClose, recipe }) {
 
   return ReactDOM.createPortal(
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
-      <div className="bg-white p-4 rounded-lg shadow-lg max-w-lg w-full relative">
+      <div className="bg-custom-beige p-4 rounded-lg shadow-lg max-w-lg w-full relative">
         <button 
           onClick={onClose} 
           className="absolute top-2 right-2 text-red-500 font-title"

@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+from rest_framework import generics
 from .serializer import *
 from .models import *
 
@@ -116,3 +117,10 @@ class RecipePhotoView(viewsets.ModelViewSet):
 class SavedRecipeView(viewsets.ModelViewSet):
     serializer_class = SavedRecipeSerializer
     queryset = SavedRecipe.objects.all()
+
+class SavedRecipeByCollectionView(generics.ListAPIView):
+    serializer_class = SavedRecipeSerializer
+
+    def get_queryset(self):
+        collection_id = self.kwargs['collection_id']
+        return SavedRecipe.objects.filter(collection_id=collection_id)

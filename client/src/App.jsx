@@ -19,10 +19,7 @@ function App() {
           <Route path="/recipe-create" element={<CreateRecipePage />} />
           <Route path="/recipe/:id" element={<RecipePage />} />
           <Route path="/colecciones" element={<Colecciones />} />
-          <Route
-            path="/coleccionesinternas"
-            element={<ColeccionesInternas />}
-          />
+          <Route path="/coleccionesinternas" element={<ColeccionesInternas />}/>
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/perfil" element={<ProfilePage />} />
