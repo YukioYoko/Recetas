@@ -15,11 +15,11 @@ export function HomePage() {
       </div>
       <div className="font-title text-[64px] text-custom-beige p-6">
         <h2 className="text-center my-2">Las más nuevas</h2>
-        <SliderRecipe />
+        <SliderRecipe filter={"newest"}/>
         <h2 className="text-center my-2">Mejor Valoradas</h2>
-        <SliderRecipe />
+        <SliderRecipe filter={"best"}/>
         <h2 className="text-center my-2">Nuestras favoritas</h2>
-        <SliderRecipe />
+        <SliderRecipe filter={"all"}/>
       </div>
       
     </div>

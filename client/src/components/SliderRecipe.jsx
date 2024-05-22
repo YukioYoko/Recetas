@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAllRecipes } from "../api/recipes.api";
 import { getAllCategories } from "../api/categories.api";
@@ -8,7 +7,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export function SliderRecipe() {
+export function SliderRecipe({ filter }) {
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [recipePhotos, setRecipePhotos] = useState([]);
@@ -25,13 +24,29 @@ export function SliderRecipe() {
     loadData();
   }, []);
 
-  const getRecipeCategories = (recipe) => {
-    return categories.filter((category) => category.recipe === recipe);
+  const getRecipeCategories = (recipeId) => {
+    return categories.filter((category) => category.recipe === recipeId);
   };
 
-  const getRecipePhotos = (recipe) => {
-    return recipePhotos.filter((recipePhoto) => recipePhoto.recipe === recipe);
+  const getRecipePhotos = (recipeId) => {
+    return recipePhotos.filter((recipePhoto) => recipePhoto.recipe === recipeId);
   };
+
+  const filterRecipes = (recipes, filter) => {
+    switch (filter) {
+      case "newest":
+        return recipes.sort((a, b) => b.id - a.id).slice(0, 12);
+      case "best":
+        return recipes
+          .sort((a, b) => b.valoration - a.valoration)
+          .slice(0, 12);
+      case "all":
+      default:
+        return recipes.slice(0, 12); // Ensure only the first 12 are shown
+    }
+  };
+
+  const filteredRecipes = filterRecipes(recipes, filter);
 
   const settings = {
     dots: false,
@@ -48,7 +63,7 @@ export function SliderRecipe() {
   return (
     <div className="max-w-[1400px] mx-auto">
       <Slider {...settings}>
-        {recipes.map((recipe) => (
+        {filteredRecipes.map((recipe) => (
           <div key={recipe.id} className="px-[7.5px]">
             <SliderRecipeCard
               recipe={recipe}

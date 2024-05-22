@@ -32,7 +32,7 @@ export function SliderRecipeCard({ recipe, categories, recipePhotos }) {
   };
 
   return (
-    <div className="bg-custom-beige font-title p-6 rounded-3xl max-w-[400px] h-[550px] flex flex-col justify-between">
+    <div className="bg-custom-beige font-title p-6 rounded-3xl max-w-[400px] h-[550px] flex flex-col justify-between border-custom-naranja-logo border-2">
       <div className="w-full h-[250px]" onClick={() => navigate(`/recipe/${recipe.id}`)}>
         {recipePhotos.length > 0 && (
           <img

@@ -98,7 +98,7 @@ export function UserRecipeCard({ recipe, categories, recipePhotos }) {
       <div className="flex flex-col gap-3">
         <div className="flex justify-end">{renderStars()}</div>
 
-        <div className="flex text-base text-black items-center font-title text-sm justify-end">
+        <div className="flex text-black items-center font-title text-sm justify-end">
           <img src={tiempo} alt="" className="w-[24px] h-[24px] mr-1" />
           <label className="px-1">{recipe.duration}</label>
           MIN
