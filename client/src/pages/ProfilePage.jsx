@@ -5,9 +5,13 @@ import editar from "../images/editar.png";
 import perfil from "../images/perfil.png";
 import { useForm } from "react-hook-form";
 import { getProfile, updateProfile } from '../api/profile';
+import AlertComponent from "../components/ui/AlertComponent";
 import { NavigationLogged } from "../components/NavigationLogged";
+import { useNavigate } from "react-router-dom";
+
 
 export function ProfilePage() {
+  const navigate = useNavigate();
   const { id } = useParams();
   const {
     register,
@@ -16,7 +20,7 @@ export function ProfilePage() {
     setValue,
   } = useForm();
   const [profile, setProfile] = useState(null);
-
+  const [alert, setAlert] = useState(null);
   const id_user = localStorage.getItem('user_id');
 
   useEffect(() => {
@@ -25,7 +29,6 @@ export function ProfilePage() {
         const response = await getProfile(id_user);
         const profileData = response.data;
         setProfile(profileData);
-        console.log(profileData);
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
@@ -42,8 +45,10 @@ export function ProfilePage() {
         setProfile(profileData);
         setValue("first_name", profileData.first_name);
         setValue("last_name", profileData.last_name);
+        
       } catch (error) {
         console.error('Error fetching profile data:', error);
+        
       }
     }
 
@@ -63,8 +68,18 @@ export function ProfilePage() {
       "email": email,
       "username": email
     };
-    console.log(profileData);
-    await updateProfile(id_user, profileData);
+    try{
+      await updateProfile(id_user, profileData);
+      navigate("/");
+    }
+    catch{
+      setAlert({
+        type: "error",
+        message: "Error al registrarse. Por favor, intente nuevamente.",
+      });
+    }
+    
+    
   });
 
 
@@ -83,7 +98,12 @@ export function ProfilePage() {
             />
           </div>
         </div>
+        <div>
+        </div>
         <form onSubmit={onSubmit} className="grid grid-cols-2 gap-x-10 content-start">
+        {alert && (
+            <AlertComponent type={alert.type} message={alert.message} />
+          )}
           <div className="flex flex-col">
             <h3>Nombre(s)</h3>
             <input
