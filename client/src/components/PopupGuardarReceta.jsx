@@ -9,7 +9,7 @@ export function Modal({ onClose, recipe }) {
   const [collections, setCollections] = useState([]);
   const userId = localStorage.getItem('user_id');
   const isLoggedIn = userId && parseInt(userId) >= 0;
-  const recipeId = recipe;
+  const recipeId = recipe.id;
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -33,7 +33,6 @@ export function Modal({ onClose, recipe }) {
     }
     try {
         await createSaved(data);
-        
         onClose();
       } catch (error) {
         console.error("Error saving recipe:", error);
@@ -60,14 +59,14 @@ export function Modal({ onClose, recipe }) {
                     <button 
                         key={collection.id} 
                         className="relative p-2 border-b font-title text-slate-700" 
-                        onClick={() => saveRecipeInCollection(collection.id)}
+                        onClick={() => saveRecipeInCollection(collection)}
                     >
                     {collection.name}
                     </button>
                     <button 
                         key={collection.id} 
                         className="relative p-2 border-b font-title text-slate-700" 
-                        onClick={() => saveRecipeInCollection(collection.id)}
+                        onClick={() => saveRecipeInCollection(collection)}
                     >
                         <img src={add} alt="Boton de agregar" className='relativew-[24px] h-[24px]'/>
                     </button>

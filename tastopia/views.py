@@ -130,4 +130,4 @@ class SavedRecipeByCollectionView(generics.ListAPIView):
 
     def get_queryset(self):
         collection_id = self.kwargs['collection_id']
-        return SavedRecipe.objects.filter(collection_id=collection_id)
+        return SavedRecipe.objects.filter(collection_id=collection_id).select_related('recipe')

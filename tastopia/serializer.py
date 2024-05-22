@@ -37,6 +37,8 @@ class RecipePhotoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class SavedRecipeSerializer(serializers.ModelSerializer):
+    recipe = RecipeSerializer()  # Anida el serializador de Recipe
+
     class Meta:
         model = SavedRecipe
-        fields = '__all__'
+        fields = ['id', 'collection', 'recipe']

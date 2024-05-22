@@ -26,7 +26,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/recipe-create" element={<CreateRecipePage />} />
             <Route path="/colecciones" element={<Colecciones />} />
-            <Route path="/coleccionesinternas" element={<ColeccionesInternas />} />
+            <Route path="/coleccionesinternas/:collectionId" element={<ColeccionesInternas />} />
             <Route path="/perfil" element={<ProfilePage />} />
           </Route>
         </Routes>
