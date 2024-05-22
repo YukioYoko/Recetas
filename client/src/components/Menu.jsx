@@ -5,6 +5,7 @@ import agregar from "../images/agregar.png";
 import categorias from "../images/categorias.png";
 import colecciones from "../images/colecciones.png";
 import perfil from "../images/perfil.png";
+import recetas from "../images/recetas.png";
 
 export function Menu() {
   const [open, setOpen] = useState(false);
@@ -102,6 +103,13 @@ export function Menu() {
               <div className="flex items-center px-2  border-b-2 border-custom-naranja-oscuro py-2 hover:pl-[10px] transition-all duration-150">
                 <img src={perfil} alt="Perfil" className="w-8 h-8 mr-5" />
                 Mi Perfil
+              </div>
+            </Link>
+
+            <Link to="/user-recipes" onClick={() => setOpen(false)}>
+              <div className="flex items-center px-2  border-b-2 border-custom-naranja-oscuro py-2 hover:pl-[10px] transition-all duration-150">
+                <img src={recetas} alt="Perfil" className="w-8 h-8 mr-5" />
+                Mis Recetas
               </div>
             </Link>
           </div>
