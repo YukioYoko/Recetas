@@ -87,7 +87,6 @@ export function CreateRecipePage() {
 
   return (
     <div>
-      <NavigationLogged />
       <form onSubmit={onSubmit} encType="multipart/form-data">
         <div className="flex pt-20 px-10 font-body font-bold text-3xl min-h-screen text-custom-naranja-oscuro bg-custom-beige justify-around">
           <div className="flex flex-col w-7/12 pb-10">

@@ -102,7 +102,6 @@ export function CategoriesPage() {
 
   return (
     <div className="bg-custom-beige min-h-screen">
-      <NavigationLogged />
       <div className="py-10 px-10">
         <div className="flex gap-10">
           <aside className="w-2/12">
