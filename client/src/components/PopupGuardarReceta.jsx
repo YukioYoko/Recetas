@@ -15,7 +15,7 @@ export function Modal({ onClose, recipe }) {
     if (isLoggedIn) {
       const fetchCollections = async () => {
         try {
-          const response = await getUserCollections(userId-1);
+          const response = await getUserCollections(userId);
           setCollections(response.data);
         } catch (error) {
           console.error("Error fetching collections:", error);

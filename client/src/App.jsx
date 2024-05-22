@@ -30,7 +30,7 @@ function App() {
             <Route path="/colecciones" element={<Colecciones />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/profile/:id" element={<ProfilePage />} />
-            <Route path="/coleccionesinternas" element={<ColeccionesInternas />} />
+            <Route path="/coleccionesinternas/:collectionId" element={<ColeccionesInternas />} />
             <Route path="/user-recipes" element={<UserRecipesPage />} />
             <Route path="/edit-recipe/:id" element={<EditRecipePage />} />
           </Route>

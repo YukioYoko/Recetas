@@ -8,7 +8,7 @@ export function CollectionList() {
 
   useEffect(() => {
     async function loadData() {
-      const collectionsRes = await getUserCollections(userId-1);
+      const collectionsRes = await getUserCollections(userId);
       setCollections(collectionsRes.data);
     }
     loadData();
