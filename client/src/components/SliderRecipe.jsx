@@ -37,12 +37,11 @@ export function SliderRecipe() {
     dots: false,
     infinite: true,
     slidesToShow: 3,
-    slidesToScroll: 3,
+    slidesToScroll: 1,
     autoplay: true,
     speed: 1000,
     autoplaySpeed: 2000,
     cssEase: "linear",
-    centerMode: true,
     centerPadding: "0px",
   };
 

@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { getAllCollections } from "../api/collections.api";
+import { getUserCollections } from "../api/collections.api";
 import { CardsColecciones } from "./CardsColecciones";
 
 export function CollectionList() {
   const [collections, setCollections] = useState([]);
+  const userId = localStorage.getItem('user_id');
 
   useEffect(() => {
     async function loadData() {
-      const collectionsRes = await getAllCollections();
+      const collectionsRes = await getUserCollections(userId-1);
       setCollections(collectionsRes.data);
     }
     loadData();

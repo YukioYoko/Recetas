@@ -11,7 +11,7 @@ export function CardsColecciones({collection}) {
     <div
       className="bg-custom-beige font-title uppercase pb-6 rounded-3xl border-2 border-custom-naranja-oscuro"
       onClick={() => {
-        navigate(`/colecciones/${collection.id}`);
+        navigate(`/coleccionesinternas/${collection.id}`);
       }}
     >
       <div className="h-8 flex items-center justify-end pr-2 pt-2">
@@ -21,14 +21,14 @@ export function CardsColecciones({collection}) {
         {collection.name}
       </label>
       
-      <div className="h-8 flex items-end justify-end mt-20 pr-3 pb-2">
+     {/*  <div className="h-8 flex items-end justify-end mt-20 pr-3 pb-2">
         10
         <img
           src={Recetas}
           alt="Numero de Recetas"
           className="max-w-full max-h-full"
         />
-      </div>
+      </div> */}
     </div>
   );
 }
