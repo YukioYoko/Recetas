@@ -8,6 +8,8 @@ import { getAllPhotos } from "../api/recipePhotos.api";
 import { getAllIngredients } from "../api/ingredients.api";
 import { NavigationLogged } from "../components/NavigationLogged";
 import { useState, useEffect } from "react";
+import { PDF } from "../components/PDF";
+import { PDFDownloadLink } from '@react-pdf/renderer';
 
 export function RecipePage() {
   const navigate = useNavigate();
@@ -84,12 +86,19 @@ export function RecipePage() {
               <img src={tiempo} alt="" className="w-[24px] h-[24px] mr-2" />
               {recipe.duration} MIN
             </div>
-            <Link
-              className="font-title text-xl uppercase text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg"
-              to=""
-            >
-              descargar
-            </Link>
+            {<PDFDownloadLink document={<PDF id={id} />} fileName={`${recipe.title}.pdf`}>
+              {({ loading, url, error, blob }) => 
+                loading ? (
+                  <button className="font-title text-xl uppercase text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg">
+                    Cargando ...
+                  </button>
+                ) : (
+                  <button className="font-title text-xl uppercase text-custom-beige bg-custom-naranja-logo px-8 py-4 rounded-lg">
+                    Descargar
+                  </button>
+                )
+              }
+            </PDFDownloadLink>}
           </div>
 
           <div className="w-1/2">

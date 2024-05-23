@@ -65,7 +65,8 @@ export function SliderRecipe({ filter }) {
       <Slider {...settings} >
         {filteredRecipes.map((recipe) => (
           <div key={recipe.id} className="px-[7.5px]">
-            <SliderRecipeCard
+            <SliderRecipeCard 
+              page={"home"}
               recipe={recipe}
               categories={getRecipeCategories(recipe.id)}
               recipePhotos={getRecipePhotos(recipe.id)}
