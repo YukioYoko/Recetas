@@ -13,6 +13,7 @@ import { Navigation } from "./components/Navigation";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { UserRecipesPage } from "./pages/UserRecipesPage";
 import { EditRecipePage } from "./pages/EditRecipePage";
+import { VerifyAccount } from "./pages/VerifyAccount";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/recipe/:id" element={<RecipePage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/verify/:email" element={<VerifyAccount />} />
           <Route path="/login" element={<LoginPage />} />  
           <Route path="/categories" element={<CategoriesPage />} />
           <Route element={<ProtectedRoute />}>

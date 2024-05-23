@@ -24,9 +24,15 @@ export function RegisterPage() {
           phone: form.phone.value,
           password: form.contrasena.value, // Use 'password' instead of 'contrasena'
         }
+        
       );
-
-      console.log(response.data);
+      console.log(response);
+      const email = await axios.post(
+        "http://localhost:8000/tastopia/send-email/",
+        {
+          email: form.correo.value, // Use 'email' instead of 'correo'
+        }
+      );
       setAlert({ type: "success", message: "¡Registro exitoso!" });
       navigate("/login");
     } catch (error) {
