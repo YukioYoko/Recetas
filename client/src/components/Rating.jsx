@@ -94,7 +94,9 @@ export function Rating({ recipeId, currentRating, currentCount, onRatingChange }
         {renderStars(rating)}
         <button onClick={openModal} className="text-custom-beige bg-custom-naranja-oscuro px-4 py-2 rounded text-sm">Valorar</button>
       </div>
-
+      <div>
+        <p className='text-sm mt-2'>{currentCount} Valoraciones</p>
+      </div>
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
           <div className="bg-white p-4 rounded-lg shadow-lg max-w-md w-full relative">
