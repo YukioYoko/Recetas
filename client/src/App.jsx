@@ -15,6 +15,7 @@ import { UserRecipesPage } from "./pages/UserRecipesPage";
 import { EditRecipePage } from "./pages/EditRecipePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 
+
 function App() {
   return (
     <BrowserRouter>

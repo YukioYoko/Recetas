@@ -6,8 +6,8 @@ import perfil from "../images/perfil.png";
 import { useForm } from "react-hook-form";
 import { getProfile, updateProfile } from '../api/profile';
 import AlertComponent from "../components/ui/AlertComponent";
-import { NavigationLogged } from "../components/NavigationLogged";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 export function ProfilePage() {
@@ -70,6 +70,9 @@ export function ProfilePage() {
     };
     try{
       await updateProfile(id_user, profileData);
+      toast.success("Perfil Actualizado", {
+        position: "bottom-right",
+      });
       navigate("/");
     }
     catch{

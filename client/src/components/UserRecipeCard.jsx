@@ -38,11 +38,8 @@ export function UserRecipeCard({ recipe, categories, recipePhotos }) {
   const handleDeleteRecipe = async (recipeId) => {
     try {
       await deleteRecipe(recipeId);
-      console.log("Receta eliminada exitosamente");
-      // Aquí podrías añadir lógica para actualizar la lista de recetas después de eliminar
     } catch (error) {
       console.error("Error al eliminar la receta:", error);
-      // Manejar el error según sea necesario
     }
   };
 
@@ -61,10 +58,10 @@ export function UserRecipeCard({ recipe, categories, recipePhotos }) {
             const accept = window.confirm("Estas Seguro");
             if (accept) {
               await handleDeleteRecipe(recipe.id);
+              window.location.reload();
               toast.success("Receta Eliminada", {
                 position: "bottom-right",
               });
-              window.location.reload();
             }
           }}
         />

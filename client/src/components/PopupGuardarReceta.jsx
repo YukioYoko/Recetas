@@ -4,6 +4,7 @@ import { getUserCollections } from '../api/collections.api';
 import { createSaved, getSaves } from '../api/saved-recipes.api';
 import cancelar from "../images/cancelar.png"
 import add from "../images/boton-agregar.png"
+import toast from "react-hot-toast";
 
 export function Modal({ onClose, recipe }) {
   const [collections, setCollections] = useState([]);
@@ -56,6 +57,9 @@ export function Modal({ onClose, recipe }) {
 
     try {
       await createSaved(data);
+      toast.success("Receta Guardada Exitosamente", {
+        position: "bottom-right",
+      });
       onClose();
     } catch (error) {
       console.error("Error saving recipe:", error);

@@ -13,6 +13,7 @@ import { PDFDownloadLink } from "@react-pdf/renderer";
 import { createComment } from "../api/comments.api";
 import { getAllComments } from "../api/comments.api";
 import { getProfile } from "../api/profile";
+import toast from "react-hot-toast";
 
 export function RecipePage() {
   const navigate = useNavigate();
@@ -55,6 +56,10 @@ export function RecipePage() {
     const userId = localStorage.getItem("user_id");
     const response = await getProfile(userId);
     const username = response.data.email;
+
+    toast.success("Comentario Creado", {
+      position: "bottom-right",
+    });
 
     const isoString = new Date().toISOString();
     const formattedDate = isoString

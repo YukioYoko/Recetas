@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AlertComponent from "../components/ui/AlertComponent";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export function RegisterPage() {
   const [alert, setAlert] = useState(null);
@@ -33,13 +34,14 @@ export function RegisterPage() {
       );
 
       console.log(response.data);
-      setAlert({ type: "success", message: "¡Registro exitoso!" });
+      toast.success("Registro Exitoso", {
+        position: "bottom-right",
+      });
       navigate("/login");
     } catch (error) {
       console.error("Error registrando usuario:", error);
-      setAlert({
-        type: "error",
-        message: "Error al registrarse. Por favor, intente nuevamente.",
+      toast.error("Error Al Registrar usuario", {
+        position: "bottom-right",
       });
     }
   };

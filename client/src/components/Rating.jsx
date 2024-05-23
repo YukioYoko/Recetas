@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getRecipe, updateRecipe } from '../api/recipes.api';
 import estrella from '../images/estrella.png';
+import toast from "react-hot-toast";
 
 export function Rating({ recipeId, currentRating, currentCount, onRatingChange }) {
   const [rating, setRating] = useState(currentRating);
@@ -49,6 +50,10 @@ export function Rating({ recipeId, currentRating, currentCount, onRatingChange }
       await updateRecipe(recipeId, updatedRecipeData);
 
       onRatingChange(newRating, newValorationCount);
+      toast.success("Valoracion Exitosa", {
+        position: "bottom-right",
+      });
+
       closeModal();
     } catch (error) {
       console.error("Error rating recipe:", error);
