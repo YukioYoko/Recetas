@@ -1,18 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { useForm } from 'react-hook-form'; // Asegúrate de importar useForm
-import { createCollection } from '../api/collections.api';
+import { useForm } from 'react-hook-form';
 import cancelar from "../images/cancelar.png";
+import { updateCollection, getCollection } from "../api/collections.api";
+import { useState, useEffect } from 'react';
 
-export function ModalCollection({ onClose }) {
+export function ModalEditCollection({ onClose, id, name }) {
   const userId = localStorage.getItem('user_id');
   const isLoggedIn = userId && parseInt(userId) >= 0;
+  const [collection, setCollection] = useState([]);
 
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: {errors},
+    setValue,
   } = useForm();
+
+  useEffect(() => {
+    async function fetchData() {
+        try {
+            const response = await getCollection(id);
+            const collectionData = response.data;
+            setCollection(collectionData);
+            setValue("name", collectionData.name);
+        } catch (error) {
+            console.error('Error fetching profile data:', error);
+        }
+    }
+    fetchData();
+  }, [id]);
   
   const onSubmit = handleSubmit(async (data) => {
     const dataCollection = {
@@ -21,11 +38,11 @@ export function ModalCollection({ onClose }) {
     };
     
     try {
-        await createCollection(dataCollection);
+        await updateCollection(id, dataCollection);
         onClose(); // Llama a la función para cerrar el modal
         window.location.reload();
     } catch (error) {
-        console.error("Error creating collection:", error);
+        console.error("Error updating collection:", error);
         
     }
   });
@@ -39,7 +56,7 @@ export function ModalCollection({ onClose }) {
         >
           <img src={cancelar} alt="Boton para cerrar" />
         </button>
-        <h2 className='font-title text-4xl text-custom-naranja-oscuro'>Nueva Colección</h2>
+        <h2 className='font-title text-4xl text-custom-naranja-oscuro'>Editar Colección</h2>
         <div>
           {isLoggedIn ? (
             <form onSubmit={onSubmit}>
@@ -50,7 +67,7 @@ export function ModalCollection({ onClose }) {
                             type="text" 
                             {...register("name", { required: true })}
                             name="name"
-                            placeholder="Ingresa el nombre de la colección"
+                            
                             className='w-full border-b bg-custom-beige'
                         />
                         {errors.name && <p>El nombre es obligatorio.</p>}
@@ -60,13 +77,13 @@ export function ModalCollection({ onClose }) {
                         type="submit" 
                         className="font-title text-xl uppercase text-custom-beige bg-custom-naranja-oscuro px-8 py-4 rounded-lg mb-10"
                         >
-                        Crear Colección
+                        Editar Colección
                         </button>
                     </div>
                 </div>
             </form>
           ) : (
-            <p>Por favor, inicie sesión para crear una colección.</p>
+            <p>Por favor, inicie sesión para editar una colección.</p>
           )}
         </div>
       </div>
