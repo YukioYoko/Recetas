@@ -6,7 +6,6 @@ import perfil from "../images/perfil.png";
 import { useForm } from "react-hook-form";
 import { getProfile, updateProfile } from '../api/profile';
 import AlertComponent from "../components/ui/AlertComponent";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export function ProfilePage() {
