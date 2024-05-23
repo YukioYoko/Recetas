@@ -61,8 +61,8 @@ export function SliderRecipe({ filter }) {
   };
 
   return (
-    <div className="max-w-[1400px] mx-auto min-h-[570px] items-baseline overflow-visible"> {/* Añadido overflow-visible */}
-      <Slider {...settings} className="min-h-[600px] items-baseline">
+    <div className="max-w-[1400px] mx-auto "> {/* Añadido overflow-visible */}
+      <Slider {...settings} >
         {filteredRecipes.map((recipe) => (
           <div key={recipe.id} className="px-[7.5px]">
             <SliderRecipeCard
