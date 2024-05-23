@@ -30,11 +30,17 @@ export function CategoriesPage() {
       const photos = photosRes.data;
 
       // Use Set to remove duplicates
-      const uniqueCategories = Array.from(new Set(categories.map(c => c.name)))
-        .map(name => categories.find(c => c.name === name));
-      
-      const uniqueIngredients = Array.from(new Set(ingredients.map(i => i.name)))
-        .map(name => ingredients.find(i => i.name === name));
+      const uniqueCategories = Array.from(
+        new Set(categories.map((c) => c.name.toLowerCase()))
+      ).map((lowercaseName) =>
+        categories.find((c) => c.name.toLowerCase() === lowercaseName)
+      );
+
+      const uniqueIngredients = Array.from(
+        new Set(ingredients.map((i) => i.name.toLowerCase()))
+      ).map((lowercaseName) =>
+        ingredients.find((i) => i.name.toLowerCase() === lowercaseName)
+      );
 
       setRecipes(recipes);
       setCategories(uniqueCategories);
