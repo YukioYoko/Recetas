@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import candado from "../images/candado.png";
 import editar from "../images/editar.png";
 import perfil from "../images/perfil.png";
@@ -9,19 +9,19 @@ import AlertComponent from "../components/ui/AlertComponent";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-
 export function ProfilePage() {
   const navigate = useNavigate();
   const { id } = useParams();
   const {
     register,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
     setValue,
   } = useForm();
   const [profile, setProfile] = useState(null);
   const [alert, setAlert] = useState(null);
   const id_user = localStorage.getItem('user_id');
+  const [previewImage, setPreviewImage] = useState(null);
 
   useEffect(() => {
     async function loadData() {
@@ -29,82 +29,91 @@ export function ProfilePage() {
         const response = await getProfile(id_user);
         const profileData = response.data;
         setProfile(profileData);
+        setValue("first_name", profileData.first_name);
+        setValue("last_name", profileData.last_name);
+        setPreviewImage(profileData.image);
       } catch (error) {
         console.error('Error fetching profile data:', error);
       }
     }
 
     loadData();
-  }, [id]);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await getProfile(id_user);
-        const profileData = response.data;
-        setProfile(profileData);
-        setValue("first_name", profileData.first_name);
-        setValue("last_name", profileData.last_name);
-        
-      } catch (error) {
-        console.error('Error fetching profile data:', error);
-        
-      }
-    }
-
-    fetchData();
-  }, [id]);
-
+  }, [id, setValue, id_user]);
   
   const onSubmit = handleSubmit(async (data) => {
     const age = localStorage.getItem('age');
     const phone = localStorage.getItem('phone');
-    const email = localStorage.getItem('email') ; 
-    const profileData = {
-      "first_name": data.first_name,
-      "last_name": data.last_name,
-      "age": age,
-      "phone": phone,
-      "email": email,
-      "username": email
-    };
-    try{
-      await updateProfile(id_user, profileData);
+    const email = localStorage.getItem('email');
+  
+    const formData = new FormData();
+    formData.append("first_name", data.first_name);
+    formData.append("last_name", data.last_name);
+    formData.append("age", age);
+    formData.append("phone", phone);
+    formData.append("email", email);
+    formData.append("username", email);
+  
+    // Verifica si se proporcionó una nueva imagen
+    if (data.image && data.image[0]) {
+      // Si se proporcionó una nueva imagen, agrégala al FormData directamente
+      formData.append("image", data.image[0]);
+    } else if (profile && profile.image) {
+      // Si no se proporcionó una nueva imagen pero hay una guardada previamente en el perfil,
+      // carga la imagen desde la ruta y agrégala al FormData
+      const response = await fetch(profile.image);
+      const blob = await response.blob();
+      formData.append("image", blob, "imagen_perfil.jpg");
+    }
+  
+    try {
+      await updateProfile(id_user, formData);
       toast.success("Perfil Actualizado", {
         position: "bottom-right",
       });
       navigate("/");
-    }
-    catch{
+    } catch (error) {
+      console.error('Error updating profile:', error);
       setAlert({
         type: "error",
         message: "Error al registrarse. Por favor, intente nuevamente.",
       });
     }
-    
-    
   });
+  
+  
+  
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreviewImage(URL.createObjectURL(file));
+    }
+  };
 
   return (
     <div>
-      <div className="flex pt-20 px-10 font-body font-bold text-3xl min-h-screen text-custom-naranja-oscuro bg-custom-beige justify-around">
-        <div className="flex justify-end relative">
-          <Link to="" className="absolute w-[50px] h-[50px]">
-            <img src={editar} alt="Icono editar" className="absolute" />
-          </Link>
-          <div className="bg-white bg-center w-60 h-60 rounded-full bg-origin-content flex items-center justify-center">
+      <div className="flex pt-20 px-10 font-body font-bold text-3xl min-h-screen text-custom-naranja-oscuro bg-custom-beige justify-around ">
+        <div className="flex justify-end relative  ">
+          
+          <div className="bg-white bg-center w-60 h-60 rounded-full bg-origin-content flex items-center justify-center w-1/4">
+          {previewImage ? (
+            <img
+              src={previewImage}
+              alt="Icono de perfil"
+              className="w-full h-full rounded-full object-cover"
+            />
+          ) : (
             <img
               src={perfil}
               alt="Icono de perfil"
-              className="justify-self-center self-center w-40 h-40"
+              className="w-full h-full rounded-full object-cover"
             />
-          </div>
+          )}
         </div>
-        <div>
         </div>
-        <form onSubmit={onSubmit} className="grid grid-cols-2 gap-x-10 content-start">
-        {alert && (
+        <div></div>
+        <form onSubmit={onSubmit} className="grid grid-cols-2 gap-x-10 content-start" encType="multipart/form-data">
+          {alert && (
             <AlertComponent type={alert.type} message={alert.message} />
           )}
           <div className="flex flex-col">
@@ -131,7 +140,9 @@ export function ProfilePage() {
               <input
                 type="file"
                 name="image"
+                {...register("image")}
                 className="text-2xl font-normal border border-custom-naranja-oscuro focus:outline-none rounded-md p-2 w-full"
+                onChange={handleImageChange}
               />
               <img
                 src={candado}
@@ -151,6 +162,5 @@ export function ProfilePage() {
         </form>
       </div>
     </div>
-    
   );
 }

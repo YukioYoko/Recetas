@@ -26,7 +26,8 @@ export function ModalCollection({ onClose }) {
       toast.success("Colección Creada Exitosamente", {
         position: "bottom-right",
       });
-      onClose(); // Llama a la función para cerrar el modal
+        onClose(); // Llama a la función para cerrar el modal
+        window.location.reload();
     } catch (error) {
       console.error("Error creating collection:", error);
     }

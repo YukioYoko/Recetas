@@ -2,11 +2,16 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+def profileDirectoryPath(instance, filename): 
+  
+    # file will be uploaded to MEDIA_ROOT / title /<filename> 
+    return 'Profile_Images/{0}/{1}'.format(instance.user, filename) 
+
 class CustomUser(models.Model):
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE )
     age = models.IntegerField()
     phone = models.CharField(max_length=10)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(upload_to=profileDirectoryPath)
     
     def __str__(self):
         return str(self.user)
