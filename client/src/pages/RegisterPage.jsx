@@ -32,7 +32,7 @@ export function RegisterPage() {
           password: form.contrasena.value, // Use 'password' instead of 'contrasena'
         }
       );
-
+      
       console.log(response.data);
       toast.success("Registro Exitoso", {
         position: "bottom-right",

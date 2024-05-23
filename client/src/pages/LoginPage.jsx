@@ -23,7 +23,7 @@ export function LoginPage() {
         }
       );
 
-      const { token, user_id, first_name, last_name, age, phone, email} = response.data;
+      const { token, user_id, first_name, last_name, age, phone, email, auth_id} = response.data;
 
       localStorage.setItem('token', token);
       localStorage.setItem('user_id', user_id);
@@ -32,6 +32,7 @@ export function LoginPage() {
       localStorage.setItem('age', age);
       localStorage.setItem('phone', phone);
       localStorage.setItem('email', email);
+      localStorage.setItem('auth_id', auth_id);
 
       toast.success("Inicio de Sesión Exitoso", {
         position: "bottom-right",
