@@ -2,7 +2,7 @@ from django.urls import path, include
 from rest_framework.documentation import include_docs_urls
 from rest_framework import routers
 from tastopia import views
-from .views import RegisterUserView, LoginUserView, SavedRecipeByCollectionView, UserDeleteView
+from .views import RegisterUserView, LoginUserView, SavedRecipeByCollectionView, EmailAPIView, GetUserByEmail
 
 router = routers.DefaultRouter()
 router.register(r'users', views.CustomUserView, 'users')
@@ -19,7 +19,8 @@ urlpatterns = [
     path("api/v1/", include(router.urls)),
     path('register/', RegisterUserView.as_view(), name='register'),
     path('login/', LoginUserView.as_view(), name='login'),
+    path('send-email/', EmailAPIView.as_view(), name='send-email'),
     path('coleccionesinternas/<int:collection_id>/', SavedRecipeByCollectionView.as_view(), name='saved-recipes-by-collection'),
-    path('api/v1/auth/users/<int:pk>/', UserDeleteView.as_view(), name='user-delete'),
+    path('getbyemail/', GetUserByEmail.as_view(), name='getbyemail'),
     path('docs/', include_docs_urls(title="Tastopia API"))
 ]

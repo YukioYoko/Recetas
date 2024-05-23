@@ -13,6 +13,42 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from .models import CustomUser
+from django.core.mail import send_mail
+from django.urls import reverse
+
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from django.core.mail import send_mail, EmailMessage
+
+class GetUserByEmail(APIView):
+    def get(self, request):
+        email = request.query_params.get('email')
+        try:
+            user = User.objects.get(email=email)
+            custom_user = CustomUser.objects.get(user=user) 
+            # Serializa el usuario si es necesario
+            return Response({'user_id': custom_user.pk}, status=status.HTTP_200_OK)
+        except CustomUser.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+class EmailAPIView(APIView):
+    def post(self, request):
+        try:
+            to_email = request.data.get('email')
+            subject = "Correo de autenticacion de cuenta"
+            message = "Bienvenido {}\nPor favor, haz clic en el siguiente enlace para verificar tu cuenta:\n\n{}".format(to_email, f'http://localhost:5173/verify/{to_email}')
+            email = EmailMessage(subject, message, to=[to_email])
+            email.send()
+            return Response({'message': 'Correo enviado'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            error_message = str(e)
+            return Response({'message': 'Error al enviar correo'}, status=status.HTTP_400_BAD_REQUEST)
+
 
 class RegisterUserView(APIView):
     serializer_class = CustomUserSerializer
@@ -79,6 +115,7 @@ class LoginUserView(APIView):
                 'last_name': user.last_name,
                 'age' : custom_user.age,
                 'phone' : custom_user.phone,
+                
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
