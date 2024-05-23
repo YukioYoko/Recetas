@@ -14,7 +14,6 @@ from rest_framework.views import APIView
 from rest_framework import status
 from .models import CustomUser
 
-
 class RegisterUserView(APIView):
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
@@ -38,7 +37,7 @@ class RegisterUserView(APIView):
 
         # Create new user
         user = User.objects.create_user(username=email, password=password, first_name=firstName,
-            last_name=lastName, email = email)
+            last_name=lastName, email=email)
         customuser = CustomUser.objects.create(
             user=user,
             age=age,
@@ -74,6 +73,7 @@ class LoginUserView(APIView):
             return Response({
                 'token': token.key,
                 'user_id': custom_user.pk, 
+                'auth_id': user.pk,
                 'email': user.email,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
@@ -84,7 +84,24 @@ class LoginUserView(APIView):
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
-
+class UserDeleteView(APIView):
+    def delete(self, request, pk):
+        try:
+            # Eliminar el usuario de la tabla User (auth)
+            user = User.objects.get(pk=pk)
+            user.delete()
+            
+            # Eliminar el usuario de la tabla CustomUser
+            custom_user = CustomUser.objects.get(user=user)
+            custom_user.delete()
+            
+            return Response({"message": "User deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
+        except User.DoesNotExist:
+            return Response({"error": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        except CustomUser.DoesNotExist:
+            return Response({"error": "CustomUser does not exist"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 from rest_framework import viewsets
 from django.contrib.auth.models import User
