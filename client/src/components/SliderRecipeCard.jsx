@@ -1,13 +1,30 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import tiempo from "../images/tiempo.png";
 import estrella from "../images/estrella.png";
 import { Modal } from "./PopupGuardarReceta";
+import { getSaves } from "../api/saved-recipes.api";
 
 export function SliderRecipeCard({ recipe, categories, recipePhotos, page }) {
   const userId = localStorage.getItem('user_id');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchSavedRecipes = async () => {
+      try {
+        const response = await getSaves();
+        const savedRecipes = response.data;
+        const isRecipeSaved = savedRecipes.some(savedRecipe => savedRecipe.recipe === recipe.id && savedRecipe.user === parseInt(userId));
+        setIsSaved(isRecipeSaved);
+      } catch (error) {
+        console.error("Error fetching saved recipes:", error);
+      }
+    };
+
+    fetchSavedRecipes();
+  }, [recipe.id, userId]);
 
   const renderStars = () => {
     const stars = [];
@@ -29,6 +46,11 @@ export function SliderRecipeCard({ recipe, categories, recipePhotos, page }) {
       }
     }
     return stars;
+  };
+
+  const handleSave = () => {
+    setIsSaved(true);
+    setIsModalOpen(false);
   };
 
   return (
@@ -55,7 +77,7 @@ export function SliderRecipeCard({ recipe, categories, recipePhotos, page }) {
                 <button onClick={() => setIsModalOpen(true)}>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    fill={page === "collections" ? "currentColor" : "none"}
+                    fill={isSaved ? "currentColor" : "none"}
                     viewBox="0 0 24 24"
                     strokeWidth="1.5"
                     stroke="currentColor"
@@ -89,7 +111,7 @@ export function SliderRecipeCard({ recipe, categories, recipePhotos, page }) {
               <div className="flex justify-end">{renderStars()}</div>
             </div>
             {isModalOpen && (
-              <Modal onClose={() => setIsModalOpen(false)} recipe={recipe.id} />
+              <Modal onClose={() => setIsModalOpen(false)} recipe={recipe.id} onSave={handleSave} />
             )}
           </div>
         </div>
