@@ -6,6 +6,7 @@ import perfil from "../images/perfil.png";
 import { useForm } from "react-hook-form";
 import { getProfile, updateProfile } from '../api/profile';
 import AlertComponent from "../components/ui/AlertComponent";
+import toast from "react-hot-toast";
 
 export function ProfilePage() {
   const navigate = useNavigate();
@@ -65,6 +66,9 @@ export function ProfilePage() {
   
     try {
       await updateProfile(id_user, formData);
+      toast.success("Perfil Actualizado", {
+        position: "bottom-right",
+      });
       navigate("/");
     } catch (error) {
       console.error('Error updating profile:', error);
