@@ -13,6 +13,7 @@ router.register(r'collections', views.CollectionView, 'collections')
 router.register(r'ingredients', views.IngredientView, 'ingredients')
 router.register(r'recipe-photos', views.RecipePhotoView, 'recipe-photos')
 router.register(r'saved-recipes', views.SavedRecipeView, 'saved-recipes')
+router.register(r'comments', views.CommentView, 'comments')
 
 urlpatterns = [
     path("api/v1/", include(router.urls)),

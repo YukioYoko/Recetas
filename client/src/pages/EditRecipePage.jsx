@@ -7,6 +7,7 @@ import { createCategory, getAllCategories, deleteCategory } from "../api/categor
 import { createIngredient, getAllIngredients, deleteIngredient } from "../api/ingredients.api";
 import { createRecipePhoto, getAllPhotos, deleteRecipePhoto } from "../api/recipePhotos.api";
 import { useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 export function EditRecipePage() {
   const navigate = useNavigate();
@@ -166,6 +167,9 @@ export function EditRecipePage() {
       await createRecipePhoto(recipePhotoData);
     }
 
+    toast.success("Receta Actualizada Exitosamente", {
+      position: "bottom-right",
+    });
     navigate("/user-recipes");
   });
 

@@ -33,6 +33,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
         instance.save()  # Save CustomUser changes
         return instance
 
+class AuthUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+    
 
 class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -52,6 +57,11 @@ class LikeSerializer(serializers.ModelSerializer):
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Collection
+        fields = '__all__'
+
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
         fields = '__all__'
 
 class IngredientSerializer(serializers.ModelSerializer):

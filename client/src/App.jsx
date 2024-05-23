@@ -27,6 +27,7 @@ function App() {
           <Route path="/verify/:email" element={<VerifyAccount />} />
           <Route path="/login" element={<LoginPage />} />  
           <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/recipe-create" element={<CreateRecipePage />} />
             <Route path="/colecciones" element={<Colecciones />} />

@@ -6,8 +6,13 @@ import perfil from "../images/perfil.png";
 import { useForm } from "react-hook-form";
 import { getProfile, updateProfile } from '../api/profile';
 import AlertComponent from "../components/ui/AlertComponent";
+import { deleteProfile } from '../api/authUser.api';
+import toast from "react-hot-toast";
+
 
 export function ProfilePage() {
+  const userId = localStorage.getItem('auth_id');
+  console.log(userId);
   const navigate = useNavigate();
   const { id } = useParams();
   const {
@@ -65,6 +70,9 @@ export function ProfilePage() {
   
     try {
       await updateProfile(id_user, formData);
+      toast.success("Perfil Actualizado", {
+        position: "bottom-right",
+      });
       navigate("/");
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -75,8 +83,6 @@ export function ProfilePage() {
     }
   });
   
-  
-  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -85,12 +91,21 @@ export function ProfilePage() {
     }
   };
 
+  const onDelete = async () => {
+    try {
+      await deleteProfile(userId);
+      navigate("/login"); // Recargar la página después de eliminar la colección
+    } catch (error) {
+      console.error("Error deleting profile:", error);
+    }
+  };
+
   return (
     <div>
       <div className="flex pt-20 px-10 font-body font-bold text-3xl min-h-screen text-custom-naranja-oscuro bg-custom-beige justify-around ">
-        <div className="flex justify-end relative  ">
+        <div className="flex justify-center relative w-1/4">
           
-          <div className="bg-white bg-center w-60 h-60 rounded-full bg-origin-content flex items-center justify-center w-1/4">
+          <div className="bg-white bg-center w-60 h-60 rounded-full bg-origin-content flex items-center justify-center ">
           {previewImage ? (
             <img
               src={previewImage}
@@ -106,8 +121,7 @@ export function ProfilePage() {
           )}
         </div>
         </div>
-        <div></div>
-        <form onSubmit={onSubmit} className="grid grid-cols-2 gap-x-10 content-start" encType="multipart/form-data">
+        <form onSubmit={onSubmit} className="grid grid-cols-2 gap-x-10 content-start w-3/4" encType="multipart/form-data">
           {alert && (
             <AlertComponent type={alert.type} message={alert.message} />
           )}
@@ -139,11 +153,6 @@ export function ProfilePage() {
                 className="text-2xl font-normal border border-custom-naranja-oscuro focus:outline-none rounded-md p-2 w-full"
                 onChange={handleImageChange}
               />
-              <img
-                src={candado}
-                alt="Imagen de candado"
-                className="w-[40px] h-[40px]"
-              />
             </div>
           </div>
           <div>
@@ -154,7 +163,16 @@ export function ProfilePage() {
               Guardar Cambios
             </button>
           </div>
+          
         </form>
+        <div>
+            <button
+              className="font-title text-xl uppercase text-custom-beige bg-custom-naranja-oscuro px-8 py-4 rounded-lg mb-10"
+              onClick={() => onDelete()} 
+            >
+              Eliminar cuenta
+            </button>
+          </div>
       </div>
     </div>
   );

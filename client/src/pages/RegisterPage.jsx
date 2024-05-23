@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AlertComponent from "../components/ui/AlertComponent";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export function RegisterPage() {
   const [alert, setAlert] = useState(null);
@@ -12,6 +13,12 @@ export function RegisterPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = event.target;
+
+    const age = parseInt(form.age.value);
+    if (age < 17) {
+      setAlert({ type: "error", message: "Debes ser mayor de 18 años para registrarte." });
+      return;
+    }
 
     try {
       const response = await axios.post(
@@ -37,9 +44,8 @@ export function RegisterPage() {
       navigate("/login");
     } catch (error) {
       console.error("Error registrando usuario:", error);
-      setAlert({
-        type: "error",
-        message: "Error al registrarse. Por favor, intente nuevamente.",
+      toast.error("Error Al Registrar usuario", {
+        position: "bottom-right",
       });
     }
   };
@@ -127,7 +133,7 @@ export function RegisterPage() {
           <div className="flex justify-center items-center flex-row pl-4 pt-7">
             <div className="SendButton">
               <input
-                className="bg-custom-naranja-logo p-3 rounded-full"
+                className="bg-custom-naranja-logo p-3 rounded-full cursor-pointer"
                 type="submit"
                 value="Registrarme"
               />
