@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { getProfile, updateProfile } from '../api/profile';
 import AlertComponent from "../components/ui/AlertComponent";
 import { deleteProfile } from '../api/authUser.api';
+import toast from "react-hot-toast";
+
 
 export function ProfilePage() {
   const userId = localStorage.getItem('auth_id');
@@ -68,6 +70,9 @@ export function ProfilePage() {
   
     try {
       await updateProfile(id_user, formData);
+      toast.success("Perfil Actualizado", {
+        position: "bottom-right",
+      });
       navigate("/");
     } catch (error) {
       console.error('Error updating profile:', error);
@@ -98,9 +103,9 @@ export function ProfilePage() {
   return (
     <div>
       <div className="flex pt-20 px-10 font-body font-bold text-3xl min-h-screen text-custom-naranja-oscuro bg-custom-beige justify-around ">
-        <div className="flex justify-end relative  ">
+        <div className="flex justify-center relative w-1/4">
           
-          <div className="bg-white bg-center w-60 h-60 rounded-full bg-origin-content flex items-center justify-center w-1/4">
+          <div className="bg-white bg-center w-60 h-60 rounded-full bg-origin-content flex items-center justify-center ">
           {previewImage ? (
             <img
               src={previewImage}
@@ -116,8 +121,7 @@ export function ProfilePage() {
           )}
         </div>
         </div>
-        <div></div>
-        <form onSubmit={onSubmit} className="grid grid-cols-2 gap-x-10 content-start" encType="multipart/form-data">
+        <form onSubmit={onSubmit} className="grid grid-cols-2 gap-x-10 content-start w-3/4" encType="multipart/form-data">
           {alert && (
             <AlertComponent type={alert.type} message={alert.message} />
           )}
@@ -148,11 +152,6 @@ export function ProfilePage() {
                 {...register("image")}
                 className="text-2xl font-normal border border-custom-naranja-oscuro focus:outline-none rounded-md p-2 w-full"
                 onChange={handleImageChange}
-              />
-              <img
-                src={candado}
-                alt="Imagen de candado"
-                className="w-[40px] h-[40px]"
               />
             </div>
           </div>

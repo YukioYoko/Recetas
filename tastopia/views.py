@@ -132,6 +132,10 @@ class CollectionView(viewsets.ModelViewSet):
             return Collection.objects.filter(user__id=user_id)
         return super().get_queryset()
 
+class CommentView(viewsets.ModelViewSet):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()
+
 class IngredientView(viewsets.ModelViewSet):
     serializer_class = IngredientSerializer
     queryset = Ingredient.objects.all()

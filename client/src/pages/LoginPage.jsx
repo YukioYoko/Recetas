@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AlertComponent from "../components/ui/AlertComponent";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export function LoginPage() {
   const [alert, setAlert] = useState(null);
@@ -33,8 +34,10 @@ export function LoginPage() {
       localStorage.setItem('email', email);
       localStorage.setItem('auth_id', auth_id);
 
+      toast.success("Inicio de Sesión Exitoso", {
+        position: "bottom-right",
+      });
       console.log(response.data);
-      setAlert({ type: 'success', message: 'Inicio de sesión exitoso!' })
       navigate("/");
       window.location.reload();
     } catch (error) {

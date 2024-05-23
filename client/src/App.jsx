@@ -13,6 +13,8 @@ import { Navigation } from "./components/Navigation";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { UserRecipesPage } from "./pages/UserRecipesPage";
 import { EditRecipePage } from "./pages/EditRecipePage";
+import { NotFoundPage } from "./pages/NotFoundPage";
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />  
           <Route path="/categories" element={<CategoriesPage />} />
+          <Route path="*" element={<NotFoundPage />} />
           <Route element={<ProtectedRoute />}>
             <Route path="/recipe-create" element={<CreateRecipePage />} />
             <Route path="/colecciones" element={<Colecciones />} />
