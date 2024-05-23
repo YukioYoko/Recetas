@@ -6,7 +6,7 @@ import { getRecipe } from "../api/recipes.api";
 import { getAllCategories } from "../api/categories.api";
 import { getAllPhotos } from "../api/recipePhotos.api";
 import { getAllIngredients } from "../api/ingredients.api";
-import { NavigationLogged } from "../components/NavigationLogged";
+import { Rating } from "../components/Rating";
 import { useState, useEffect } from "react";
 import { PDF } from "../components/PDF";
 import { PDFDownloadLink } from '@react-pdf/renderer';
@@ -43,6 +43,14 @@ export function RecipePage() {
     fetchRecipe();
   }, [id]);
 
+  const handleRatingChange = (newRating, newValorationCount) => {
+    setRecipe((prevRecipe) => ({
+      ...prevRecipe,
+      valoration: newRating,
+      valorationCount: newValorationCount,
+    }));
+  };
+
   const getRecipeCategories = (recipeId) => {
     return categories.filter((category) => category.recipe === recipeId);
   };
@@ -71,17 +79,7 @@ export function RecipePage() {
         <div className="flex flex-row">
           <div className="w-1/2 mt-10">
             <h3 className="text-5xl my-6">{recipe.title}</h3>
-
-            <div className="flex gap-1">
-              {Array.from({ length: recipe.valoration }).map((_, index) => (
-                <img
-                  key={index}
-                  src={estrella}
-                  alt=""
-                  className="w-[32px] h-[32px]"
-                />
-              ))}
-            </div>
+            <Rating recipeId={recipe.id} currentRating={recipe.valoration} currentCount={recipe.valorationCount} onRatingChange={handleRatingChange} />
             <div className="flex flex-row text-base mt-4 mb-10">
               <img src={tiempo} alt="" className="w-[24px] h-[24px] mr-2" />
               {recipe.duration} MIN
