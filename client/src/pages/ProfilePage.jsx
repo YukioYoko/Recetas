@@ -6,8 +6,11 @@ import perfil from "../images/perfil.png";
 import { useForm } from "react-hook-form";
 import { getProfile, updateProfile } from '../api/profile';
 import AlertComponent from "../components/ui/AlertComponent";
+import { deleteProfile } from '../api/authUser.api';
 
 export function ProfilePage() {
+  const userId = localStorage.getItem('auth_id');
+  console.log(userId);
   const navigate = useNavigate();
   const { id } = useParams();
   const {
@@ -75,13 +78,20 @@ export function ProfilePage() {
     }
   });
   
-  
-  
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
+    }
+  };
+
+  const onDelete = async () => {
+    try {
+      await deleteProfile(userId);
+      window.location.reload(); // Recargar la página después de eliminar la colección
+    } catch (error) {
+      console.error("Error deleting profile:", error);
     }
   };
 
@@ -154,7 +164,16 @@ export function ProfilePage() {
               Guardar Cambios
             </button>
           </div>
+          
         </form>
+        <div>
+            <button
+              className="font-title text-xl uppercase text-custom-beige bg-custom-naranja-oscuro px-8 py-4 rounded-lg mb-10"
+              onClick={() => onDelete()} 
+            >
+              Eliminar cuenta
+            </button>
+          </div>
       </div>
     </div>
   );

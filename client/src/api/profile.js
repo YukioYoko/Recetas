@@ -15,3 +15,4 @@ export const updateProfile = (id, profile) => {
     });
 };
 export const createProfile = (profile) => profileApi.post('/', profile);
+
