@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { getUserCollections } from '../api/collections.api';
-import { createSaved } from '../api/saved-recipes.api';
+import { createSaved, getSaves } from '../api/saved-recipes.api';
 import cancelar from "../images/cancelar.png"
 import add from "../images/boton-agregar.png"
 
 export function Modal({ onClose, recipe }) {
   const [collections, setCollections] = useState([]);
+  const [savedRecipes, setSavedRecipes] = useState([]);
   const userId = localStorage.getItem('user_id');
   const isLoggedIn = userId && parseInt(userId) >= 0;
   const recipeId = recipe;
@@ -15,7 +16,7 @@ export function Modal({ onClose, recipe }) {
     if (isLoggedIn) {
       const fetchCollections = async () => {
         try {
-          const response = await getUserCollections(userId-1);
+          const response = await getUserCollections(userId);
           setCollections(response.data);
         } catch (error) {
           console.error("Error fetching collections:", error);
@@ -26,20 +27,40 @@ export function Modal({ onClose, recipe }) {
     }
   }, [userId, isLoggedIn]);
 
-  const saveRecipeInCollection = async (colId) => {
-    const data = {
-        collection: colId,
-        recipe: recipe,
-    }
-    try {
-        await createSaved(data);
-        
-        onClose();
+  useEffect(() => {
+    const fetchSavedRecipes = async () => {
+      try {
+        const response = await getSaves();
+        setSavedRecipes(response.data);
       } catch (error) {
-        console.error("Error saving recipe:", error);
-        alert('Error al guardar la receta en la colección.');
+        console.error("Error fetching saved recipes:", error);
       }
-    
+    };
+
+    fetchSavedRecipes();
+  }, []);
+
+  const saveRecipeInCollection = async (colId) => {
+    // Verificar si la receta ya está guardada en esta colección
+    const alreadySaved = savedRecipes.some(savedRecipe => savedRecipe.collection === colId && savedRecipe.recipe === recipeId);
+    if (alreadySaved) {
+      // La receta ya está guardada en esta colección, hacer algo aquí (p. ej., mostrar un mensaje)
+      alert('Esta receta ya está guardada en esta colección.');
+      return;
+    }
+
+    const data = {
+      collection: colId,
+      recipe: recipeId,
+    };
+
+    try {
+      await createSaved(data);
+      onClose();
+    } catch (error) {
+      console.error("Error saving recipe:", error);
+      alert('Error al guardar la receta en la colección.');
+    }
   };
 
   return ReactDOM.createPortal(

@@ -16,7 +16,7 @@ export function ModalCollection({ onClose }) {
   
   const onSubmit = handleSubmit(async (data) => {
     const dataCollection = {
-        user: userId-1,
+        user: userId,
         name: data.name,
     };
     

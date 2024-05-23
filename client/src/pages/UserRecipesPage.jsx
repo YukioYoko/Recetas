@@ -10,7 +10,7 @@ export function UserRecipesPage() {
   const [userRecipes, setUserRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
   const [recipePhotos, setRecipePhotos] = useState([]);
-  const userId = localStorage.getItem("user_id") - 1; // Obtiene el ID del usuario activo desde el almacenamiento local
+  const userId = localStorage.getItem("user_id"); // Obtiene el ID del usuario activo desde el almacenamiento local
 
   useEffect(() => {
     async function fetchUserRecipes() {
