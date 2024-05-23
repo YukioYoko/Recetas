@@ -13,6 +13,12 @@ export function RegisterPage() {
     event.preventDefault();
     const form = event.target;
 
+    const age = parseInt(form.age.value);
+    if (age < 17) {
+      setAlert({ type: "error", message: "Debes ser mayor de 18 años para registrarte." });
+      return;
+    }
+
     try {
       const response = await axios.post(
         "http://localhost:8000/tastopia/register/",
@@ -121,7 +127,7 @@ export function RegisterPage() {
           <div className="flex justify-center items-center flex-row pl-4 pt-7">
             <div className="SendButton">
               <input
-                className="bg-custom-naranja-logo p-3 rounded-full"
+                className="bg-custom-naranja-logo p-3 rounded-full cursor-pointer"
                 type="submit"
                 value="Registrarme"
               />
