@@ -54,6 +54,11 @@ class CollectionSerializer(serializers.ModelSerializer):
         model = Collection
         fields = '__all__'
 
+class CommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__'
+
 class IngredientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ingredient

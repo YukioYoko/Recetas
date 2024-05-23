@@ -7,6 +7,7 @@ import { createCategory } from "../api/categories.api";
 import { createIngredient } from "../api/ingredients.api";
 import { createRecipePhoto } from "../api/recipePhotos.api";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export function CreateRecipePage() {
   const navigate = useNavigate();
@@ -81,6 +82,10 @@ export function CreateRecipePage() {
       };
       await createRecipePhoto(recipePhotoData);
     }
+
+    toast.success("Receta Creada Exitosamente", {
+      position: "bottom-right",
+    });
 
     navigate("/");
   });
