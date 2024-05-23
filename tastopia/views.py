@@ -118,6 +118,7 @@ class LoginUserView(APIView):
                 'last_name': user.last_name,
                 'age' : custom_user.age,
                 'phone' : custom_user.phone,
+                
             }, status=status.HTTP_200_OK)
         else:
             return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)

@@ -17,6 +17,7 @@ export function VerifyAccount() {
       setUser(response.data.user_id);
     } catch (error) {
       console.error("Error registrando usuario:", error);
+      navigate("/login");
     }
   };
 
