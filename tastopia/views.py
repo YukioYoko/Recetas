@@ -49,9 +49,6 @@ class EmailAPIView(APIView):
             error_message = str(e)
             return Response({'message': 'Error al enviar correo'}, status=status.HTTP_400_BAD_REQUEST)
 
-    
-
-     
 
 class RegisterUserView(APIView):
     serializer_class = CustomUserSerializer

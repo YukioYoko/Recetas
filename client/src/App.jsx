@@ -14,6 +14,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { UserRecipesPage } from "./pages/UserRecipesPage";
 import { EditRecipePage } from "./pages/EditRecipePage";
 import { VerifyAccount } from "./pages/VerifyAccount";
+import {NotFoundPage} from "./pages/NotFoundPage";
 
 function App() {
   return (

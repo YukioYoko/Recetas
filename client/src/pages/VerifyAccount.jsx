@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 export function VerifyAccount() {
+  const navigate = useNavigate();
   const { email } = useParams();
   const [user, setUser] = useState(null);
-
+  navigate("/login");
   const handleSubmit = async (event) => {
     event.preventDefault();
 
