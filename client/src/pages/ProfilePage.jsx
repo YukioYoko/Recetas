@@ -94,7 +94,7 @@ export function ProfilePage() {
   const onDelete = async () => {
     try {
       await deleteProfile(userId);
-      window.location.reload(); // Recargar la página después de eliminar la colección
+      navigate("/login"); // Recargar la página después de eliminar la colección
     } catch (error) {
       console.error("Error deleting profile:", error);
     }
