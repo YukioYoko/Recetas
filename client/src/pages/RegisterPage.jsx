@@ -25,7 +25,7 @@ export function RegisterPage() {
           password: form.contrasena.value, // Use 'password' instead of 'contrasena'
         }
       );
-
+      
       console.log(response.data);
       setAlert({ type: "success", message: "¡Registro exitoso!" });
       navigate("/login");

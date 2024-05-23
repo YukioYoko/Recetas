@@ -14,7 +14,6 @@ from rest_framework.views import APIView
 from rest_framework import status
 from .models import CustomUser
 
-
 class RegisterUserView(APIView):
     serializer_class = CustomUserSerializer
     queryset = CustomUser.objects.all()
@@ -38,7 +37,7 @@ class RegisterUserView(APIView):
 
         # Create new user
         user = User.objects.create_user(username=email, password=password, first_name=firstName,
-            last_name=lastName, email = email)
+            last_name=lastName, email=email)
         customuser = CustomUser.objects.create(
             user=user,
             age=age,
