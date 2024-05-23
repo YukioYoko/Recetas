@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import { SliderRecipeCard } from "../components/SliderRecipeCard";
+import { SavedRecipeCard } from "../components/SavedRecipeCard";
 import { getSaves } from "../api/saved-recipes.api";
 import { getCollection } from '../api/collections.api';
 import { getAllCategories } from '../api/categories.api';
@@ -66,10 +66,11 @@ export function ColeccionesInternas() {
       <div className="grid grid-cols-4 gap-x-4 gap-y-10">
         {savedRecipes.map((savedRecipe) => (
           <div key={savedRecipe.id} className="px-[7.5px]">
-            <SliderRecipeCard 
+            <SavedRecipeCard page={"collections"}
               recipe={recipes.find(recipe => recipe.id === savedRecipe.recipe)} 
               categories={getRecipeCategories(savedRecipe.recipe)} 
               recipePhotos={getRecipePhotos(savedRecipe.recipe)} 
+              
             />
           </div>
         ))}

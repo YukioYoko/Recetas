@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import tiempo from "../images/tiempo.png";
 import estrella from "../images/estrella.png";
 import { Modal } from "./PopupGuardarReceta";
+import { deleteSaved } from "../api/saved-recipes.api";
 
-export function SliderRecipeCard({ recipe, categories, recipePhotos, page }) {
+export function SavedRecipeCard({ recipe, categories, recipePhotos, page, idSaved }) {
   const userId = localStorage.getItem('user_id');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -30,6 +31,8 @@ export function SliderRecipeCard({ recipe, categories, recipePhotos, page }) {
     }
     return stars;
   };
+
+  
 
   return (
     <div className="relative group h-[570px]">
