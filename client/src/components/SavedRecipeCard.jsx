@@ -1,14 +1,12 @@
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
 import tiempo from "../images/tiempo.png";
 import estrella from "../images/estrella.png";
-import { Modal } from "./PopupGuardarReceta";
 import { deleteSaved } from "../api/saved-recipes.api";
 
 export function SavedRecipeCard({ recipe, categories, recipePhotos, page, idSaved }) {
-  const userId = localStorage.getItem('user_id');
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const renderStars = () => {
     const stars = [];
@@ -32,7 +30,18 @@ export function SavedRecipeCard({ recipe, categories, recipePhotos, page, idSave
     return stars;
   };
 
-  
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    try {
+      await deleteSaved(idSaved);
+      // Recargar la página después de eliminar la receta guardada
+      window.location.reload();
+    } catch (error) {
+      console.error("Error deleting saved recipe:", error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <div className="relative group h-[570px]">
@@ -55,21 +64,25 @@ export function SavedRecipeCard({ recipe, categories, recipePhotos, page, idSave
                     {recipe.title}
                   </label>
                 </div>
-                <button onClick={() => setIsModalOpen(true)}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill={page === "collections" ? "currentColor" : "none"}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-[32px] h-[32px]"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
-                    />
-                  </svg>
+                <button onClick={handleDelete} disabled={isDeleting}>
+                  {isDeleting ? (
+                    <div className="spinner"></div>
+                  ) : (
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill={page === "collections" ? "currentColor" : "none"}
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-[32px] h-[32px]"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
+                      />
+                    </svg>
+                  )}
                 </button>
               </div>
               <div className="flex gap-2 mb-[100px] flex-wrap">
@@ -91,9 +104,6 @@ export function SavedRecipeCard({ recipe, categories, recipePhotos, page, idSave
               </div>
               <div className="flex justify-end">{renderStars()}</div>
             </div>
-            {isModalOpen && (
-              <Modal onClose={() => setIsModalOpen(false)} recipe={recipe.id} />
-            )}
           </div>
         </div>
       </div>

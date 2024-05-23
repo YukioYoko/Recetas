@@ -70,7 +70,7 @@ export function ColeccionesInternas() {
               recipe={recipes.find(recipe => recipe.id === savedRecipe.recipe)} 
               categories={getRecipeCategories(savedRecipe.recipe)} 
               recipePhotos={getRecipePhotos(savedRecipe.recipe)} 
-              
+              idSaved={savedRecipe.id}
             />
           </div>
         ))}
