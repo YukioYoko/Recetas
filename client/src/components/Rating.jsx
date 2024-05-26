@@ -41,7 +41,7 @@ export function Rating({ recipeId, currentRating, currentCount, onRatingChange }
         ...recipe,
         valoration: newRating,
         valorationCount: newValorationCount,
-        user: userId - 1
+        user: userId
       };
 
       // Actualizar la lista de usuarios que han valorado la receta

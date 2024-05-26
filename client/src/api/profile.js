@@ -7,6 +7,8 @@ const profileApi = axios.create({
 export const getProfile = (id) => profileApi.get(`/${id}/`);
 
 
+
+
 export const updateProfile = (id, profile) => {
     return profileApi.put(`/${id}/`, profile, {
         headers: {

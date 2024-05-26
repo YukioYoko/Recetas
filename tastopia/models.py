@@ -12,7 +12,7 @@ class CustomUser(models.Model):
     age = models.IntegerField()
     phone = models.CharField(max_length=10)
     image = models.ImageField(upload_to=profileDirectoryPath)
-    
+    auth = models.BooleanField(default=False)
     def __str__(self):
         return str(self.user)
     
